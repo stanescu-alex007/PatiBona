@@ -1,0 +1,127 @@
+<section id="acasă" class="hero-section">
+  <div class="container py-5">
+    <div class="hero-card">
+      <div class="hero-badge floating-chip">🍰 Dulce. Natural. Cu dragoste.</div>
+
+      <h1 class="hero-title display-font">
+        Prăjituri de casă și candy bar cu gust de copilărie
+      </h1>
+
+      <p class="hero-text">
+        Peste 30 de ani de experiență, ingrediente proaspete, fără amelioratori,
+        doar rețete naturale pregătite cu grijă de bunica.
+      </p>
+
+      <div class="hero-actions">
+
+        <a href="tel:+40700111222" class="call-btn">
+          <span>Sună acum</span>
+        </a>
+
+        <a routerLink="/work-in-progress" class="ghost-btn">
+          Vezi galeria completă
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="despre" class="highlights-section">
+  <div class="container py-5">
+    <div class="section-head">
+      <span class="eyebrow">De ce noi</span>
+      <h2 class="display-font">Deserturi autentice, făcute cu suflet</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-xl-3" *ngFor="let quote of quotes; let i = index">
+        <article class="quote-card" [style.animation-delay.ms]="i * 120">
+          <div class="quote-icon">✨</div>
+          <p>{{ quote }}</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="promise-section">
+  <div class="container py-5">
+    <div class="promise-box">
+      <div class="promise-text">
+        <span class="eyebrow">Promisiunea noastră</span>
+        <h2 class="display-font">Doar bun, curat și făcut cu dragoste</h2>
+        <p>
+          Fără premixuri, fără gust artificial, fără compromisuri. Doar unt,
+          frișcă bună, cacao, vanilie, fructe și rețete lucrate cu atenție.
+        </p>
+      </div>
+
+      <div class="promise-pills">
+        <span>100% natural</span>
+        <span>Fără amelioratori</span>
+        <span>Ingrediente proaspete</span>
+        <span>Rețete de casă</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cakes-carousel-section">
+  <div class="container-fluid py-5">
+    <div class="carousel-wrapper">
+      <div class="carousel-track">
+        <div
+          class="cake-card"
+          *ngFor="let cake of cakesLoop"
+          [ngClass]="cake.size"
+        >
+          <img [src]="cake.image" alt="Tort bunica" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galerie" class="gallery-section">
+  <div class="container py-5">
+    <div class="section-head section-head-row">
+      <div>
+        <span class="eyebrow">Galerie</span>
+        <h2 class="display-font">O privire în vitrina bunicii</h2>
+      </div>
+
+      <a routerLink="/work-in-progress" class="call-btn">
+        <span>Vezi toată galeria</span>
+      </a>
+    </div>
+
+    <div class="masonry-grid">
+      <article
+        class="gallery-card"
+        *ngFor="let item of galleryPreview"
+        [ngClass]="item.size"
+      >
+        <img [src]="item.image" [alt]="item.title" />
+        <div class="gallery-overlay">
+<!--          <h3>{{ item.title }}</h3>-->
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="container py-5">
+    <div class="contact-card">
+      <span class="eyebrow">Contact</span>
+      <h2 class="display-font">Vorbește direct cu bunica</h2>
+      <p>
+        Pentru comenzi, candy bar sau detalii despre prăjituri, sună direct:
+      </p>
+
+      <a href="tel:+40700111222" class="phone-hero">
+        📞 0700 111 222
+      </a>
+    </div>
+  </div>
+</section>

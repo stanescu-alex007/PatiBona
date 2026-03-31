@@ -1,0 +1,38 @@
+.site-footer {
+  padding-bottom: 1rem;
+}
+
+.footer-box {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-radius: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+
+  h3 {
+    margin: 0 0 0.35rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-soft);
+  }
+}
+
+.footer-phone {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+  .footer-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --bg: #f8ebdd;
+  --surface: #fff8f2;
+  --surface-hover: #241917;
+  --surface-2: #f2dfcd;
+  --text: #3f2413;
+  --text-hover: #fff3ea;
+  --text-soft: #704b34;
+  --primary: #7a4b2a;
+  --accent: #ff4f93;
+  --accent-2: #5ee7ff;
+  --border: rgba(122, 75, 42, 0.14);
+  --shadow: 0 12px 35px rgba(122, 75, 42, 0.12);
+}
+
+.dark-theme {
+  --bg: #17110f;
+  --surface: #241917;
+  --surface-hover: #fff8f2;
+  --surface-2: #312320;
+  --text: #fff3ea;
+  --text-hover: #3f2413;
+  --text-soft: #d6b9a3;
+  --primary: #ffb88a;
+  --accent: #ff4f93;
+  --accent-2: #5ee7ff;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.35s ease, color 0.35s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, .display-font {
+  font-family: 'Playfair Display', serif;
+}

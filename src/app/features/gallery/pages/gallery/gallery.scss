@@ -1,0 +1,91 @@
+.gallery-page .section-head {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  p {
+    color: var(--text-soft);
+    max-width: 600px;
+    margin: 0.8rem auto 0;
+  }
+}
+
+/* ===== SECTION ===== */
+.gallery-block {
+  margin-top: 4rem;
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+  }
+}
+
+/* ===== TORTURI (FARA FUNDAL) ===== */
+.torturi-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.tort-card {
+  width: 180px;
+  transition: transform 0.3s ease;
+}
+
+.tort-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.tort-card:hover {
+  transform: translateY(-8px) scale(1.05);
+}
+
+/* ===== GRID NORMAL (pentru restul) ===== */
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.grid-card {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+
+  transition: transform 0.3s ease;
+}
+
+.grid-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.grid-card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991.98px) {
+  .grid-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tort-card {
+    width: 140px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .grid-list {
+    grid-template-columns: 1fr;
+  }
+
+  .torturi-list {
+    gap: 1.2rem;
+  }
+}

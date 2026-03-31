@@ -1,0 +1,222 @@
+/* =========================
+   WRAPPER
+========================= */
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding-top: 0.5rem;
+}
+
+/* =========================
+   NAVBAR PILL
+========================= */
+.navbar-pill {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0.5rem 1rem;
+  border-radius: 36px;
+
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+
+  transition: all 0.3s ease;
+}
+
+/* =========================
+   TOP BAR LAYOUT (GRID)
+========================= */
+.nav-top {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+/* =========================
+   BRAND
+========================= */
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+/* =========================
+   LINKS
+========================= */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* center links */
+.center-links {
+  justify-self: center;
+}
+
+/* link style */
+.nav-links a {
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* underline animation */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* =========================
+   ACTIONS (RIGHT)
+========================= */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* buttons */
+.theme-btn,
+.mobile-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 50%;
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.mobile-toggle {
+  border: 1px solid var(--border);
+}
+
+.theme-btn.mobile {
+  display: none;
+}
+
+.theme-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   MOBILE TOGGLE
+========================= */
+.mobile-toggle {
+  display: none;
+}
+
+/* =========================
+   MOBILE DROPDOWN
+========================= */
+.nav-links.mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  width: 100%;
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+
+  transition: all 0.3s ease;
+}
+
+.nav-links.mobile.open {
+  max-height: 500px;
+  opacity: 1;
+  padding-top: 0.5rem;
+}
+
+/* =========================
+   DESKTOP
+========================= */
+@media (min-width: 992px) {
+  .nav-links.mobile {
+    display: none;
+  }
+
+  .nav-links.desktop {
+    display: flex;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 991.98px) {
+
+  .nav-top {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .nav-actions {
+    justify-self: end;
+  }
+
+  .center-links {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+  }
+
+  .theme-btn.desktop {
+    display: none;
+  }
+
+  .theme-btn.mobile {
+    display: flex;
+  }
+
+  .nav-links.desktop {
+    display: none;
+  }
+}
+
+/* =========================
+   EXTRA POLISH
+========================= */
+
+/* hover lift */
+.nav-links a:hover {
+  transform: translateY(-2px);
+}
+
+/* smooth open animation */
+.navbar-pill.open {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}

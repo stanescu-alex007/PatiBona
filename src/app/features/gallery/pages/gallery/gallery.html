@@ -1,0 +1,45 @@
+<section class="gallery-page">
+  <div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="section-head">
+      <span class="eyebrow">Galerie completă</span>
+      <h1 class="display-font">O privire în vitrina bunicii</h1>
+      <p>Descoperă deserturile noastre făcute cu dragoste.</p>
+    </div>
+
+    <!-- TORTURI -->
+    <section class="gallery-block torturi">
+      <h2 class="display-font">Torturi</h2>
+
+      <div class="torturi-list">
+        <div class="tort-card" *ngFor="let item of torturi">
+          <img [src]="item.image" alt="tort" />
+        </div>
+      </div>
+    </section>
+
+    <!-- CANDY BAR -->
+    <section class="gallery-block">
+      <h2 class="display-font">Candy Bar</h2>
+
+      <div class="grid-list">
+        <div class="grid-card" *ngFor="let item of candyBar">
+          <img [src]="item.image" alt="candy bar" />
+        </div>
+      </div>
+    </section>
+
+    <!-- PRAJITURI -->
+    <section class="gallery-block">
+      <h2 class="display-font">Prăjituri din magazin</h2>
+
+      <div class="grid-list">
+        <div class="grid-card" *ngFor="let item of prajituri">
+          <img [src]="item.image" alt="prajitura" />
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>

@@ -1,0 +1,143 @@
+.wip-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+/* CARD */
+.wip-card {
+  text-align: center;
+  padding: 3rem 2rem;
+
+  border-radius: 36px;
+  background: radial-gradient(
+      circle at top right,
+      rgba(255, 79, 147, 0.12),
+      transparent 30%
+  ),
+  radial-gradient(
+      circle at bottom left,
+      rgba(94, 231, 255, 0.12),
+      transparent 30%
+  ),
+  var(--surface);
+
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+/* CAKE */
+.cake-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.cake {
+  width: 160px;
+  height: auto;
+
+  animation: floatCake 3s ease-in-out infinite;
+}
+
+/* FLOAT ANIMATION */
+@keyframes floatCake {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+}
+
+/* CONTENT */
+.wip-content h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+}
+
+.wip-content p {
+  color: var(--text-soft);
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+}
+
+/* EYEBROW */
+.eyebrow {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.home-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem 1.6rem;
+  border-radius: 999px;
+
+  text-decoration: none;
+  font-weight: 800;
+
+  color: white;
+  background: var(--accent);
+
+  box-shadow: 0 10px 25px rgba(255, 79, 147, 0.35);
+
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+/* text */
+.home-btn span {
+  position: relative;
+  z-index: 2;
+}
+
+/* glow subtle */
+.home-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+
+  background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.4),
+      transparent 60%
+  );
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* hover */
+.home-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 35px rgba(255, 79, 147, 0.45);
+}
+
+.home-btn:hover::before {
+  opacity: 1;
+}
+
+/* active click feel */
+.home-btn:active {
+  transform: scale(0.97);
+}
+
+/* RESPONSIVE */
+@media (max-width: 767.98px) {
+  .wip-card {
+    padding: 2rem 1.2rem;
+  }
+
+  .cake {
+    width: 120px;
+  }
+}
