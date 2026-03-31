@@ -1,45 +1,111 @@
 <section class="gallery-page">
-  <div class="container py-5">
 
-    <!-- HEADER -->
-    <div class="section-head">
-      <span class="eyebrow">Galerie completă</span>
+  <!-- ===== HERO ===== -->
+  <header class="gallery-hero">
+    <div class="gallery-hero__inner">
+      <span class="eyebrow">✦ Galerie completă ✦</span>
       <h1 class="display-font">O privire în vitrina bunicii</h1>
-      <p>Descoperă deserturile noastre făcute cu dragoste.</p>
+      <p>Fiecare desert este o poveste dulce, făcută cu dragoste și răbdare.</p>
+    </div>
+    <div class="gallery-hero__decoration" aria-hidden="true">
+      <span class="deco-dot"></span>
+      <span class="deco-dot"></span>
+      <span class="deco-dot"></span>
+    </div>
+  </header>
+
+  <!-- ===== TORTURI ===== -->
+  <section class="gallery-section">
+    <div class="gallery-section__label">
+      <span class="section-num">01</span>
+      <h2 class="display-font">Torturi</h2>
+      <span class="section-line"></span>
     </div>
 
-    <!-- TORTURI -->
-    <section class="gallery-block torturi">
-      <h2 class="display-font">Torturi</h2>
-
-      <div class="torturi-list">
-        <div class="tort-card" *ngFor="let item of torturi">
-          <img [src]="item.image" alt="tort" />
+    <div class="masonry-cols cake-cols">
+      <div class="masonry-col"
+           *ngFor="let col of torturiCols; trackBy: trackByColIndex">
+        <div
+          class="cake-item"
+          [class.entering]="torturiEntering.has(entry.globalIndex)"
+          [style.animation-delay.ms]="torturiEntering.get(entry.globalIndex) ?? 0"
+          [attr.data-mod]="entry.globalIndex % 7"
+          *ngFor="let entry of col; trackBy: trackByGlobalIndex"
+        >
+          <img [src]="entry.item.image" [alt]="entry.item.alt" loading="lazy" />
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- CANDY BAR -->
-    <section class="gallery-block">
+    <div class="load-more-wrap" *ngIf="canLoadMoreTorturi">
+      <button class="load-more-btn" (click)="loadMoreTorturi()">
+        Vezi mai multe <span class="load-more-arrow">↓</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== DIVIDER ===== -->
+  <div class="section-divider" aria-hidden="true"><span>❧</span></div>
+
+  <!-- ===== CANDY BAR ===== -->
+  <section class="gallery-section">
+    <div class="gallery-section__label">
+      <span class="section-num">02</span>
       <h2 class="display-font">Candy Bar</h2>
+      <span class="section-line"></span>
+    </div>
 
-      <div class="grid-list">
-        <div class="grid-card" *ngFor="let item of candyBar">
-          <img [src]="item.image" alt="candy bar" />
+    <div class="masonry-cols photo-cols">
+      <div class="masonry-col"
+           *ngFor="let col of candyBarCols; trackBy: trackByColIndex">
+        <div
+          [class]="photoClass(entry.item, candyBarEntering, entry.globalIndex)"
+          [style.animation-delay.ms]="candyBarEntering.get(entry.globalIndex) ?? 0"
+          *ngFor="let entry of col; trackBy: trackByGlobalIndex"
+        >
+          <img [src]="entry.item.image" [alt]="entry.item.alt" loading="lazy" />
+          <div class="photo-shine" aria-hidden="true"></div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- PRAJITURI -->
-    <section class="gallery-block">
+    <div class="load-more-wrap" *ngIf="canLoadMoreCandyBar">
+      <button class="load-more-btn" (click)="loadMoreCandyBar()">
+        Vezi mai multe <span class="load-more-arrow">↓</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== DIVIDER ===== -->
+  <div class="section-divider" aria-hidden="true"><span>❧</span></div>
+
+  <!-- ===== PRAJITURI ===== -->
+  <section class="gallery-section">
+    <div class="gallery-section__label">
+      <span class="section-num">03</span>
       <h2 class="display-font">Prăjituri din magazin</h2>
+      <span class="section-line"></span>
+    </div>
 
-      <div class="grid-list">
-        <div class="grid-card" *ngFor="let item of prajituri">
-          <img [src]="item.image" alt="prajitura" />
+    <div class="masonry-cols photo-cols">
+      <div class="masonry-col"
+           *ngFor="let col of prajituriCols; trackBy: trackByColIndex">
+        <div
+          [class]="photoClass(entry.item, prajituriEntering, entry.globalIndex)"
+          [style.animation-delay.ms]="prajituriEntering.get(entry.globalIndex) ?? 0"
+          *ngFor="let entry of col; trackBy: trackByGlobalIndex"
+        >
+          <img [src]="entry.item.image" [alt]="entry.item.alt" loading="lazy" />
+          <div class="photo-shine" aria-hidden="true"></div>
         </div>
       </div>
-    </section>
+    </div>
 
-  </div>
+    <div class="load-more-wrap" *ngIf="canLoadMorePrajituri">
+      <button class="load-more-btn" (click)="loadMorePrajituri()">
+        Vezi mai multe <span class="load-more-arrow">↓</span>
+      </button>
+    </div>
+  </section>
+
 </section>

@@ -14,11 +14,11 @@
 <!--          <a routerLink="/dashboard" fragment="acasă">Acasă</a>-->
           <a routerLink="/" >Acasă</a>
 <!--          <a routerLink="/dashboard" fragment="despre">Despre</a>-->
-          <a routerLink="/work-in-progress">Despre</a>
+          <a routerLink="/despre">Despre</a>
 <!--          <a routerLink="/dashboard" fragment="galerie">Galerie</a>-->
-          <a routerLink="/work-in-progress">Galerie</a>
+          <a routerLink="/gallery">Galerie</a>
 <!--          <a routerLink="/dashboard" fragment="contact">Contact</a>-->
-          <a routerLink="/work-in-progress">Contact</a>
+          <a routerLink="/contact">Contact</a>
         </div>
 
         <!-- RIGHT (actions) -->
@@ -35,9 +35,9 @@
       <!-- MOBILE MENU -->
       <div class="nav-links mobile" [class.open]="mobileOpen">
         <a routerLink="/" fragment="acasă" (click)="closeMobile()">Acasă</a>
-        <a routerLink="/work-in-progress" fragment="despre" (click)="closeMobile()">Despre</a>
-        <a routerLink="/work-in-progress" fragment="galerie" (click)="closeMobile()">Galerie</a>
-        <a routerLink="/work-in-progress" fragment="contact" (click)="closeMobile()">Contact</a>
+        <a routerLink="/despre" (click)="closeMobile()">Despre</a>
+        <a routerLink="/gallery" (click)="closeMobile()">Galerie</a>
+        <a routerLink="/contact" (click)="closeMobile()">Contact</a>
         <img class="theme-btn mobile" [src]="darkMode ? 'svg/sun.svg' : 'svg/moon.svg' " (click)="toggleTheme()"/>
       </div>
 

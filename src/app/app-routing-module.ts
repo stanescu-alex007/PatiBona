@@ -16,6 +16,18 @@ const routes: Routes = [
         .then(m => m.GalleryModule)
   },
   {
+    path: 'despre',
+    loadChildren: () =>
+      import('./features/work-in-progress/despre-module')
+        .then(m => m.DespreModule)
+  },
+  {
+    path: 'contact',
+    loadChildren: () =>
+      import('./features/work-in-progress/contact-module')
+        .then(m => m.ContactModule)
+  },
+  {
     path: 'work-in-progress',
     loadChildren: () =>
       import('./features/work-in-progress/work-in-progress-module')

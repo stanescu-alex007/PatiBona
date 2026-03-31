@@ -1,0 +1,151 @@
+<!-- ===== HERO ===== -->
+<section class="despre-hero">
+  <div class="hero-img-wrap">
+    <img
+      src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=1600&q=80"
+      alt="Patiseria Bunicii"
+      class="hero-bg-img"
+    />
+    <div class="hero-overlay">
+      <div class="container">
+        <div class="hero-content">
+          <span class="eyebrow eyebrow-light">Povestea noastră</span>
+          <h1 class="display-font">Trei decenii de<br>dulceață autentică</h1>
+          <p>Din 1993, bunica pregătește același gust de acasă — cu ingrediente naturale, rețete de familie și multă dragoste.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STORY ===== -->
+<section class="story-section">
+  <div class="container py-5">
+    <div class="story-grid">
+
+      <div class="story-text">
+        <span class="eyebrow">Cum a început totul</span>
+        <h2 class="display-font">O rețetă de familie, transmisă cu dragoste</h2>
+        <p>
+          Bunica și bunicul au început simplu — cu plăcinte, cozonaci, covrigi și
+          brânzoaice. Produse cinstite, făcute cu mâna, care aduceau oamenii din
+          tot cartierul pentru gustul lor autentic.
+        </p>
+        <p>
+          La un moment dat au deschis și un restaurant cu pizza. O aventură
+          frumoasă, dar inima lor a rămas mereu la patiserie și aluaturi dulci.
+        </p>
+        <p>
+          După ce au închis restaurantul, s-au întors la ce știau cel mai bine —
+          prăjituri, torturi și toată patiseria cu care au crescut generații de clienți.
+          De câțiva ani, au adăugat și serviciul de <strong>candy bar</strong> pentru
+          evenimente speciale.
+        </p>
+      </div>
+
+      <div class="story-images">
+        <img
+          class="img-main"
+          src="https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=900&q=80"
+          alt="Patiseria noastră"
+          loading="lazy"
+        />
+        <img
+          class="img-accent"
+          src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=600&q=80"
+          alt="Rețete de casă"
+          loading="lazy"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== MILESTONES ===== -->
+<section class="milestones-section">
+  <div class="container py-5">
+
+    <div class="section-head">
+      <span class="eyebrow">Momente memorabile</span>
+      <h2 class="display-font">Povestea noastră în ani</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item" *ngFor="let m of milestones; let i = index" [style.animation-delay.ms]="i * 150">
+        <div class="timeline-dot">
+          <span>{{ m.icon }}</span>
+        </div>
+        <div class="timeline-content">
+          <span class="timeline-year">{{ m.year }}</span>
+          <h3>{{ m.title }}</h3>
+          <p>{{ m.description }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== VALUES ===== -->
+<section class="values-section">
+  <div class="container py-5">
+
+    <div class="section-head">
+      <span class="eyebrow">Valorile noastre</span>
+      <h2 class="display-font">Ce ne face speciali</h2>
+    </div>
+
+    <div class="values-grid">
+      <article
+        class="value-card"
+        *ngFor="let v of values; let i = index"
+        [style.animation-delay.ms]="i * 100"
+      >
+        <span class="value-icon">{{ v.icon }}</span>
+        <h3>{{ v.title }}</h3>
+        <p>{{ v.text }}</p>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== LOCATION ===== -->
+<section class="location-section">
+  <div class="container py-5">
+    <div class="location-card">
+
+      <div class="location-text">
+        <span class="eyebrow">Ne găsești la</span>
+        <h2 class="display-font">Vino să ne vizitezi</h2>
+
+        <div class="location-detail">
+          <span class="detail-icon">📍</span>
+          <span>Str. Exemplu nr. 1, București, România</span>
+        </div>
+        <div class="location-detail">
+          <span class="detail-icon">🕐</span>
+          <div>
+            <div>Luni – Vineri: <strong>08:00 – 20:00</strong></div>
+            <div>Sâmbătă: <strong>08:00 – 19:00</strong></div>
+            <div>Duminică: <strong>09:00 – 14:00</strong></div>
+          </div>
+        </div>
+
+        <a href="tel:+40700111222" class="call-btn">
+          <span>📞 Sună acum</span>
+        </a>
+      </div>
+
+      <div class="location-image-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80"
+          alt="Bucătăria noastră"
+          loading="lazy"
+        />
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,297 @@
+/* =========================================================
+   CONTACT PAGE
+   ========================================================= */
+
+/* ----- Shared utilities ----- */
+.eyebrow {
+  display: inline-block;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+/* ----- Hero ----- */
+.contact-hero {
+  background: var(--bg);
+}
+
+.contact-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+  animation: riseIn 0.8s ease both;
+
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    margin: 0 0 1rem;
+    line-height: 1.1;
+  }
+
+  p {
+    color: var(--text-soft);
+    font-size: 1.1rem;
+    line-height: 1.75;
+    margin: 0;
+  }
+}
+
+/* ----- Phone Card ----- */
+.phone-section {
+  background: var(--bg);
+}
+
+.phone-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem;
+  border-radius: 40px;
+  background:
+    radial-gradient(circle at center, rgba(255, 79, 147, 0.13), transparent 70%),
+    var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: riseIn 0.8s ease both;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 42px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    transform: translateY(-14px) scale(1.02);
+    box-shadow: 0 32px 70px rgba(255, 79, 147, 0.28);
+
+    &::before { opacity: 0.25; }
+
+    .phone-icon {
+      animation: phoneShake 0.6s ease;
+    }
+  }
+}
+
+.phone-icon {
+  font-size: 4rem;
+  display: block;
+  line-height: 1;
+  animation: phoneBreathe 3.5s ease-in-out infinite;
+}
+
+.phone-number {
+  font-size: clamp(2.5rem, 8vw, 3.8rem);
+  font-weight: 900;
+  font-family: 'Playfair Display', serif;
+  color: var(--text);
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+.phone-hint {
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ----- Info Cards ----- */
+.info-section {
+  background: var(--bg);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease;
+  animation: riseIn 0.7s ease both;
+
+  &:hover {
+    transform: translateY(-6px);
+  }
+
+  .info-icon {
+    display: block;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    margin: 0 0 0.8rem;
+    font-size: 1.15rem;
+    color: var(--text);
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 2.1;
+
+    strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+  }
+}
+
+.map-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.7; }
+}
+
+/* ----- CTA Banner ----- */
+.cta-section {
+  background: var(--bg);
+}
+
+.cta-banner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background:
+    radial-gradient(circle at right, rgba(94, 231, 255, 0.1), transparent 50%),
+    radial-gradient(circle at left, rgba(255, 79, 147, 0.1), transparent 50%),
+    var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 36px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+  animation: riseIn 0.7s ease both;
+}
+
+.cta-emoji {
+  font-size: 3.8rem;
+  flex-shrink: 0;
+}
+
+.cta-text {
+  flex: 1;
+
+  h3 {
+    margin: 0 0 0.4rem;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    color: var(--text);
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 1rem;
+  }
+}
+
+.call-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 1rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-weight: 800;
+  font-size: 1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 10px 30px rgba(255, 79, 147, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(255, 79, 147, 0.45);
+  }
+}
+
+/* ----- Animations ----- */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes phoneBreathe {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+
+@keyframes phoneShake {
+  0%   { transform: rotate(0deg) scale(1); }
+  20%  { transform: rotate(-14deg) scale(1.1); }
+  40%  { transform: rotate(12deg) scale(1.1); }
+  60%  { transform: rotate(-8deg) scale(1.05); }
+  80%  { transform: rotate(6deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 991.98px) {
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .info-grid .info-card:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cta-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-grid .info-card:last-child {
+    grid-column: auto;
+  }
+
+  .phone-card {
+    padding: 2.5rem 1.5rem;
+  }
+}
