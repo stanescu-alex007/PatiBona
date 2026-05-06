@@ -7,7 +7,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard').then(m => m.Dashboard),
   },
   {
-    path: 'gallery',
+    path: 'galerie',
     loadComponent: () => import('./features/gallery/pages/gallery/gallery').then(m => m.Gallery),
   },
   {
@@ -19,7 +19,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/work-in-progress/contact').then(m => m.Contact),
   },
   {
-    path: 'work-in-progress',
+    path: 'in-lucru',
     loadComponent: () =>
       import('./features/work-in-progress/work-in-progress/work-in-progress').then(m => m.WorkInProgress),
   },
