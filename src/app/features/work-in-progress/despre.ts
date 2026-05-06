@@ -15,13 +15,13 @@ interface Value {
 
 @Component({
   selector: 'app-despre',
-  standalone: false,
+  standalone: true,
+  imports: [],
   templateUrl: './despre.html',
   styleUrl: './despre.scss',
 })
 export class Despre {
-
-  milestones: Milestone[] = [
+  readonly milestones: Milestone[] = [
     {
       year: '—',
       icon: '🥐',
@@ -48,7 +48,7 @@ export class Despre {
     },
   ];
 
-  values: Value[] = [
+  readonly values: Value[] = [
     {
       icon: '🌿',
       title: 'Natural',

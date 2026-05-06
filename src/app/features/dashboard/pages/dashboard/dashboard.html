@@ -13,7 +13,6 @@
       </p>
 
       <div class="hero-actions">
-
         <a href="tel:+40700111222" class="call-btn">
           <span>Sună acum</span>
         </a>
@@ -34,12 +33,14 @@
     </div>
 
     <div class="row g-4">
-      <div class="col-12 col-md-6 col-xl-3" *ngFor="let quote of quotes; let i = index">
-        <article class="quote-card" [style.animation-delay.ms]="i * 120">
-          <div class="quote-icon">✨</div>
-          <p>{{ quote }}</p>
-        </article>
-      </div>
+      @for (quote of quotes; track quote; let i = $index) {
+        <div class="col-12 col-md-6 col-xl-3">
+          <article class="quote-card" [style.animation-delay.ms]="i * 120">
+            <div class="quote-icon">✨</div>
+            <p>{{ quote }}</p>
+          </article>
+        </div>
+      }
     </div>
   </div>
 </section>
@@ -70,13 +71,11 @@
   <div class="container-fluid py-5">
     <div class="carousel-wrapper">
       <div class="carousel-track">
-        <div
-          class="cake-card"
-          *ngFor="let cake of cakesLoop"
-          [ngClass]="cake.size"
-        >
-          <img [src]="cake.image" alt="Tort bunica" />
-        </div>
+        @for (cake of cakesLoop; track $index) {
+          <div class="cake-card large">
+            <img [src]="cake.image" alt="Tort bunica" />
+          </div>
+        }
       </div>
     </div>
   </div>
@@ -96,16 +95,12 @@
     </div>
 
     <div class="masonry-grid">
-      <article
-        class="gallery-card"
-        *ngFor="let item of galleryPreview"
-        [ngClass]="item.size"
-      >
-        <img [src]="item.image" [alt]="item.title" />
-        <div class="gallery-overlay">
-<!--          <h3>{{ item.title }}</h3>-->
-        </div>
-      </article>
+      @for (item of galleryPreview; track item.image) {
+        <article class="gallery-card {{ item.size }}">
+          <img [src]="item.image" [alt]="item.title" />
+          <div class="gallery-overlay"></div>
+        </article>
+      }
     </div>
   </div>
 </section>
@@ -125,4 +120,3 @@
     </div>
   </div>
 </section>
-

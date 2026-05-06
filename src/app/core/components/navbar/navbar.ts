@@ -1,27 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  standalone: false,
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-
-  darkMode = false;
-  mobileOpen = false;
+  readonly darkMode = signal(false);
+  readonly mobileOpen = signal(false);
 
   toggleTheme(): void {
-    this.darkMode = !this.darkMode;
-    document.body.classList.toggle('dark-theme', this.darkMode);
+    this.darkMode.update(v => !v);
+    document.body.classList.toggle('dark-theme', this.darkMode());
   }
 
   toggleMobile(): void {
-    this.mobileOpen = !this.mobileOpen;
+    this.mobileOpen.update(v => !v);
   }
 
   closeMobile(): void {
-    this.mobileOpen = false;
+    this.mobileOpen.set(false);
   }
-
 }

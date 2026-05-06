@@ -72,16 +72,18 @@
     </div>
 
     <div class="timeline">
-      <div class="timeline-item" *ngFor="let m of milestones; let i = index" [style.animation-delay.ms]="i * 150">
-        <div class="timeline-dot">
-          <span>{{ m.icon }}</span>
+      @for (m of milestones; track m.title; let i = $index) {
+        <div class="timeline-item" [style.animation-delay.ms]="i * 150">
+          <div class="timeline-dot">
+            <span>{{ m.icon }}</span>
+          </div>
+          <div class="timeline-content">
+            <span class="timeline-year">{{ m.year }}</span>
+            <h3>{{ m.title }}</h3>
+            <p>{{ m.description }}</p>
+          </div>
         </div>
-        <div class="timeline-content">
-          <span class="timeline-year">{{ m.year }}</span>
-          <h3>{{ m.title }}</h3>
-          <p>{{ m.description }}</p>
-        </div>
-      </div>
+      }
     </div>
 
   </div>
@@ -97,15 +99,13 @@
     </div>
 
     <div class="values-grid">
-      <article
-        class="value-card"
-        *ngFor="let v of values; let i = index"
-        [style.animation-delay.ms]="i * 100"
-      >
-        <span class="value-icon">{{ v.icon }}</span>
-        <h3>{{ v.title }}</h3>
-        <p>{{ v.text }}</p>
-      </article>
+      @for (v of values; track v.title; let i = $index) {
+        <article class="value-card" [style.animation-delay.ms]="i * 100">
+          <span class="value-icon">{{ v.icon }}</span>
+          <h3>{{ v.title }}</h3>
+          <p>{{ v.text }}</p>
+        </article>
+      }
     </div>
 
   </div>
