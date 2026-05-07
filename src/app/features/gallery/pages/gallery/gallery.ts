@@ -1,4 +1,13 @@
-import { Component, computed, signal } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 
 interface GalleryItem {
   image: string;
@@ -21,20 +30,11 @@ export class Gallery {
     { image: '/images/candy-bar/candy-bar-4.jpeg', alt: 'Cozonac feliat' },
   ];
 
-  private readonly torturiAll: GalleryItem[] = [
-    { image: '/images/birthday-cake/birthday-cake-1-removebg-preview.png',  alt: 'Tort aniversar 1'  },
-    { image: '/images/birthday-cake/birthday-cake-2-removebg-preview.png',  alt: 'Tort aniversar 2'  },
-    { image: '/images/birthday-cake/birthday-cake-3-removebg-preview.png',  alt: 'Tort aniversar 3'  },
-    { image: '/images/birthday-cake/birthday-cake-4-removebg-preview.png',  alt: 'Tort aniversar 4'  },
-    { image: '/images/birthday-cake/birthday-cake-5-removebg-preview.png',  alt: 'Tort aniversar 5'  },
-    { image: '/images/birthday-cake/birthday-cake-6-removebg-preview.png',  alt: 'Tort aniversar 6'  },
-    { image: '/images/birthday-cake/birthday-cake-7-removebg-preview.png',  alt: 'Tort aniversar 7'  },
-    { image: '/images/birthday-cake/birthday-cake-8-removebg-preview.png',  alt: 'Tort aniversar 8'  },
-    { image: '/images/birthday-cake/birthday-cake-9-removebg-preview.png',  alt: 'Tort aniversar 9'  },
-    { image: '/images/birthday-cake/birthday-cake-10-removebg-preview.png', alt: 'Tort aniversar 10' },
-    { image: '/images/birthday-cake/birthday-cake-11-removebg-preview.png', alt: 'Tort aniversar 11' },
-    { image: '/images/birthday-cake/birthday-cake-12-removebg-preview.png', alt: 'Tort aniversar 12' },
-    { image: '/images/birthday-cake/birthday-cake-13-removebg-preview.png', alt: 'Tort aniversar 13' },
+  readonly torturiImages: GalleryItem[] = [
+    { image: '/images/birthday-cake/birthday-cake-1-removebg-preview.png', alt: 'Tort aniversar 1' },
+    { image: '/images/birthday-cake/birthday-cake-2-removebg-preview.png', alt: 'Tort aniversar 2' },
+    { image: '/images/birthday-cake/birthday-cake-3-removebg-preview.png', alt: 'Tort aniversar 3' },
+    { image: '/images/birthday-cake/birthday-cake-4-removebg-preview.png', alt: 'Tort aniversar 4' },
   ];
 
   private readonly candyBarAll: GalleryItem[] = [
@@ -83,19 +83,58 @@ export class Gallery {
     { image: '/images/candy-bar/candy-bar-6.jpeg', alt: 'Prăjitură 20' },
   ];
 
-  readonly torturiCount   = signal(8);
-  readonly candyBarCount  = signal(9);
-  readonly prajituriCount = signal(9);
+  private readonly destroyRef = inject(DestroyRef);
+  readonly candyBarGridRef = viewChild<ElementRef<HTMLElement>>('candyBarGrid');
 
-  readonly torturiVisible   = computed(() => this.torturiAll.slice(0, this.torturiCount()));
-  readonly candyBarVisible  = computed(() => this.candyBarAll.slice(0, this.candyBarCount()));
-  readonly prajituriVisible = computed(() => this.prajituriAll.slice(0, this.prajituriCount()));
+  // Live column count of the photo grid — updated from computed style on resize.
+  // Initial guess based on viewport so SSR / first paint matches the CSS breakpoints.
+  readonly cols = signal(this.detectInitialCols());
 
-  readonly canLoadMoreTorturi   = computed(() => this.torturiCount()   < this.torturiAll.length);
-  readonly canLoadMoreCandyBar  = computed(() => this.candyBarCount()  < this.candyBarAll.length);
-  readonly canLoadMorePrajituri = computed(() => this.prajituriCount() < this.prajituriAll.length);
+  readonly candyBarRows  = signal(3);
+  readonly prajituriRows = signal(3);
 
-  loadMoreTorturi():   void { this.torturiCount.update(n =>   Math.min(n + 8, this.torturiAll.length));   }
-  loadMoreCandyBar():  void { this.candyBarCount.update(n =>  Math.min(n + 9, this.candyBarAll.length));  }
-  loadMorePrajituri(): void { this.prajituriCount.update(n => Math.min(n + 9, this.prajituriAll.length)); }
+  readonly candyBarVisible = computed(() =>
+    this.candyBarAll.slice(0, Math.min(this.cols() * this.candyBarRows(), this.candyBarAll.length)),
+  );
+  readonly prajituriVisible = computed(() =>
+    this.prajituriAll.slice(0, Math.min(this.cols() * this.prajituriRows(), this.prajituriAll.length)),
+  );
+
+  readonly canLoadMoreCandyBar  = computed(() => this.candyBarVisible().length  < this.candyBarAll.length);
+  readonly canLoadMorePrajituri = computed(() => this.prajituriVisible().length < this.prajituriAll.length);
+
+  loadMoreCandyBar():  void { this.candyBarRows.update(r =>  r + 2); }
+  loadMorePrajituri(): void { this.prajituriRows.update(r => r + 2); }
+
+  scrollToSection(event: Event, id: string): void {
+    event.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    history.replaceState(null, '', `${location.pathname}${location.search}#${id}`);
+  }
+
+  constructor() {
+    afterNextRender(() => {
+      const el = this.candyBarGridRef()?.nativeElement;
+      if (!el) return;
+
+      const update = () => {
+        const tpl = getComputedStyle(el).gridTemplateColumns;
+        const count = tpl.split(' ').filter(s => s.trim().length > 0).length;
+        if (count > 0) this.cols.set(count);
+      };
+
+      update();
+      const ro = new ResizeObserver(update);
+      ro.observe(el);
+      this.destroyRef.onDestroy(() => ro.disconnect());
+    });
+  }
+
+  private detectInitialCols(): number {
+    if (typeof window === 'undefined') return 4;
+    const w = window.innerWidth;
+    if (w <= 600) return 2;
+    if (w <= 991) return 3;
+    return 4;
+  }
 }

@@ -11,10 +11,10 @@
     </div>
 
     <nav class="section-nav">
-      <a href="#cozonac" class="section-nav__link">🍞 Cozonac</a>
-      <a href="#torturi" class="section-nav__link">🎂 Torturi</a>
-      <a href="#candy-bar" class="section-nav__link">🍬 Candy Bar</a>
-      <a href="#prajituri" class="section-nav__link">🍰 Prăjituri</a>
+      <a href="#cozonac" class="section-nav__link" (click)="scrollToSection($event, 'cozonac')">🍞 Cozonac</a>
+      <a href="#torturi" class="section-nav__link" (click)="scrollToSection($event, 'torturi')">🎂 Torturi</a>
+      <a href="#candy-bar" class="section-nav__link" (click)="scrollToSection($event, 'candy-bar')">🍬 Candy Bar</a>
+      <a href="#prajituri" class="section-nav__link" (click)="scrollToSection($event, 'prajituri')">🍰 Prăjituri</a>
     </nav>
   </header>
 
@@ -70,35 +70,53 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
-       TORTURI
+       TORTURI SPOTLIGHT
   ════════════════════════════════════════════ -->
-  <section id="torturi" class="gallery-section">
-    <div class="gallery-section__inner">
+  <section id="torturi" class="torturi-section">
+    <div class="torturi-inner">
 
-      <div class="section-header">
-        <div class="section-header__text">
-          <span class="section-num">01</span>
-          <h2 class="display-font">Torturi</h2>
-        </div>
-        <span class="section-line"></span>
+      <div class="torturi-badge">
+        <span class="badge-star">🎂</span>
+        Torturi pentru ocazii speciale
       </div>
 
-      <div class="cake-grid">
-        @for (item of torturiVisible(); track item.alt) {
-          <div class="cake-card">
-            <img [src]="item.image" [alt]="item.alt" loading="lazy" />
+      <div class="torturi-layout">
+
+        <div class="torturi-info">
+          <span class="torturi-eyebrow">Aniversări · Botezuri · Nunți</span>
+          <h2 class="display-font">Torturile noastre</h2>
+          <p class="torturi-desc">
+            De la torturi clasice cu blat de vanilie, până la creații personalizate
+            pentru cele mai speciale ocazii — fiecare tort e gândit, decorat și
+            copt pe comandă, exact pentru sărbătoarea ta.
+          </p>
+
+          <ul class="torturi-attrs">
+            <li><span class="attr-icon">🎉</span> Aniversări, botezuri, nunți</li>
+            <li><span class="attr-icon">🎨</span> Design personalizat după preferințe</li>
+            <li><span class="attr-icon">🧁</span> Blat și creme făcute în casă</li>
+            <li><span class="attr-icon">📅</span> Comandă cu minim 3 zile înainte</li>
+          </ul>
+
+          <a href="tel:+40700111222" class="torturi-cta">
+            📞 Comandă tort
+          </a>
+        </div>
+
+        <div class="torturi-image-col">
+          <div class="torturi-main-img">
+            <img [src]="torturiImages[0].image" [alt]="torturiImages[0].alt" loading="lazy" />
           </div>
-        }
-      </div>
-
-      @if (canLoadMoreTorturi()) {
-        <div class="load-more-wrap">
-          <button class="load-more-btn" (click)="loadMoreTorturi()">
-            Mai multe torturi <span class="load-more-arrow">↓</span>
-          </button>
+          <div class="torturi-sub-imgs">
+            @for (img of torturiImages.slice(1); track img.alt) {
+              <div class="torturi-sub-img">
+                <img [src]="img.image" [alt]="img.alt" loading="lazy" />
+              </div>
+            }
+          </div>
         </div>
-      }
 
+      </div>
     </div>
   </section>
 
@@ -109,14 +127,17 @@
     <div class="gallery-section__inner">
 
       <div class="section-header">
-        <div class="section-header__text">
-          <span class="section-num">02</span>
-          <h2 class="display-font">Candy Bar</h2>
+        <div class="section-badge">
+          <span class="badge-star">🍬</span>
+          Dulciuri pentru evenimente
         </div>
-        <span class="section-line"></span>
+        <div class="section-header__title">
+          <h2 class="display-font">Candy Bar</h2>
+          <span class="section-line"></span>
+        </div>
       </div>
 
-      <div class="photo-masonry">
+      <div class="photo-masonry" #candyBarGrid>
         @for (item of candyBarVisible(); track item.alt) {
           <div class="photo-card">
             <img [src]="item.image" [alt]="item.alt" loading="lazy" />
@@ -142,11 +163,14 @@
     <div class="gallery-section__inner">
 
       <div class="section-header">
-        <div class="section-header__text">
-          <span class="section-num">03</span>
-          <h2 class="display-font">Prăjituri din magazin</h2>
+        <div class="section-badge">
+          <span class="badge-star">🍰</span>
+          Direct din vitrina noastră
         </div>
-        <span class="section-line"></span>
+        <div class="section-header__title">
+          <h2 class="display-font">Prăjituri din magazin</h2>
+          <span class="section-line"></span>
+        </div>
       </div>
 
       <div class="photo-masonry">
