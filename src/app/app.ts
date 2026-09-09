@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -16,11 +17,14 @@ export class App {
   protected readonly title = signal('PatiBona');
 
   constructor() {
+    const platformId = inject(PLATFORM_ID);
     inject(Router).events.pipe(
       filter(e => e instanceof NavigationEnd),
       takeUntilDestroyed(),
     ).subscribe(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      if (isPlatformBrowser(platformId)) {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
     });
   }
 }

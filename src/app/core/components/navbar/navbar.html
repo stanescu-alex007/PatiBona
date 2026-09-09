@@ -12,8 +12,10 @@
         <!-- CENTER (links desktop) -->
         <div class="nav-links desktop center-links">
           <a routerLink="/">Acasă</a>
-          <a routerLink="/despre">Despre</a>
-          <a routerLink="/gallery">Galerie</a>
+          <a (click)="scrollTo('cozonac')">Cozonaci</a>
+          <a (click)="scrollTo('torturi')">Torturi</a>
+          <a (click)="scrollTo('candy-bar')">Candy Bar</a>
+          <a (click)="scrollTo('magazin')">Magazin</a>
           <a routerLink="/contact">Contact</a>
         </div>
 
@@ -30,9 +32,11 @@
 
       <!-- MOBILE MENU -->
       <div class="nav-links mobile" [class.open]="mobileOpen()">
-        <a routerLink="/" fragment="acasă" (click)="closeMobile()">Acasă</a>
-        <a routerLink="/despre" (click)="closeMobile()">Despre</a>
-        <a routerLink="/gallery" (click)="closeMobile()">Galerie</a>
+        <a routerLink="/" (click)="closeMobile()">Acasă</a>
+        <a (click)="scrollTo('cozonac')">Cozonaci</a>
+        <a (click)="scrollTo('torturi')">Torturi</a>
+        <a (click)="scrollTo('candy-bar')">Candy Bar</a>
+        <a (click)="scrollTo('magazin')">Magazin</a>
         <a routerLink="/contact" (click)="closeMobile()">Contact</a>
         <img class="theme-btn mobile" [src]="darkMode() ? 'svg/sun.svg' : 'svg/moon.svg'" (click)="toggleTheme()" />
       </div>
