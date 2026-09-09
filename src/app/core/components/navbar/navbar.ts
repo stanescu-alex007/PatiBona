@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +9,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './navbar.scss',
 })
 export class Navbar {
+  private router = inject(Router);
+
   readonly darkMode = signal(false);
   readonly mobileOpen = signal(false);
 
@@ -23,5 +25,15 @@ export class Navbar {
 
   closeMobile(): void {
     this.mobileOpen.set(false);
+  }
+
+  scrollTo(sectionId: string): void {
+    this.closeMobile();
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      this.router.navigate(['/'], { fragment: sectionId });
+    }
   }
 }

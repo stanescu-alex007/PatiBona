@@ -7,14 +7,6 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard').then(m => m.Dashboard),
   },
   {
-    path: 'galerie',
-    loadComponent: () => import('./features/gallery/pages/gallery/gallery').then(m => m.Gallery),
-  },
-  {
-    path: 'despre',
-    loadComponent: () => import('./features/work-in-progress/despre').then(m => m.Despre),
-  },
-  {
     path: 'contact',
     loadComponent: () => import('./features/work-in-progress/contact').then(m => m.Contact),
   },
