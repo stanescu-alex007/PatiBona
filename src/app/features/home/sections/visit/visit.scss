@@ -38,14 +38,20 @@
 }
 
 // ── Map ────────────────────────────────────────────────────
+// An explicit height, not aspect-ratio: the iframe inside is absolutely
+// positioned, and a phone browser that ignores aspect-ratio would collapse
+// the box to nothing.
 .visit__map {
-  aspect-ratio: 4 / 3;
+  height: 75vw;
+  min-height: 16rem;
+  max-height: 28rem;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
 
   @include up($bp-lg) {
-    aspect-ratio: auto;
+    height: auto;
+    max-height: none;
     min-height: 32rem;
   }
 }
