@@ -1,0 +1,63 @@
+<section id="vizita" class="visit" aria-labelledby="visit-title">
+  <app-blossoms layout="b" tone="light" />
+  <header class="visit__head container" appReveal [revealChildren]="true">
+    <h2 id="visit-title" class="display-2xl" data-reveal-child>{{ copy.title }}</h2>
+    <p class="lead visit__lead" data-reveal-child>{{ copy.lead }}</p>
+  </header>
+
+  <div class="visit__grid container">
+    <app-map-embed
+      class="visit__map frame"
+      appReveal
+      [revealY]="40"
+      [embedUrl]="business.mapsEmbedUrl"
+      title="Harta Pati Bona, Aleea 1 Castanilor 4, Craiova"
+    />
+
+    <div class="visit__card" appReveal [revealY]="40" [revealDelay]="0.12">
+      <div class="visit__call">
+        <p class="visit__eyebrow">
+          <app-icon name="phone" />
+          Comenzi și informații
+        </p>
+        <a class="visit__phone" [href]="'tel:' + business.phone">{{ business.phoneDisplay }}</a>
+        <p class="visit__call-note">Răspundem cu drag, în fiecare zi, în timpul programului.</p>
+      </div>
+
+      <div class="visit__details">
+        <div class="visit__row">
+          <span class="visit__badge">
+            <app-icon name="map-pin" />
+          </span>
+          <div class="visit__row-body">
+            <p class="visit__label">Adresă</p>
+            <p class="visit__address">
+              {{ business.address.street }}, {{ business.address.postalCode }} {{ business.address.city }}
+            </p>
+            <a class="visit__maps-link" [href]="business.mapsUrl" target="_blank" rel="noopener">
+              Deschide în Google Maps
+              <app-icon name="arrow-up-right" />
+            </a>
+          </div>
+        </div>
+
+        <div class="visit__row">
+          <span class="visit__badge">
+            <app-icon name="clock" />
+          </span>
+          <div class="visit__row-body">
+            <p class="visit__label">Program</p>
+            <ul class="visit__hours">
+              @for (slot of business.hours; track slot.days) {
+                <li>
+                  <span>{{ slot.days }}</span>
+                  <span class="visit__time">{{ slot.hours }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

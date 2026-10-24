@@ -1,0 +1,10 @@
+<ul class="attrs">
+  @for (item of items(); track item.text) {
+    <li class="attrs__item">
+      <span class="attrs__icon">
+        <app-icon [name]="item.icon" />
+      </span>
+      <span class="attrs__text">{{ item.text }}</span>
+    </li>
+  }
+</ul>

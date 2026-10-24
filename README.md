@@ -1,160 +1,142 @@
-# PatiBona — Patiseria Bunicii
+# Pati Bona
 
-A modern Angular SPA for **Patiseria Bunicii** ("Bunica's Pastries"), a Romanian homemade dessert business. The site showcases the pastry shop's products through a visually warm, responsive interface with light/dark theme support.
+Site-ul patiseriei Pati Bona din Craiova. Angular 21 (standalone, zoneless, SSR cu prerender), GSAP ScrollTrigger pentru animații legate de scroll și Lenis pentru scroll inerțial.
 
----
+## Comenzi
 
-## Tech Stack
+```bash
+npm start        # dev server pe http://localhost:4200
+npm run build    # build de producție + prerender în dist/PatiBona
+npm test         # teste unitare (vitest)
+```
 
-| Layer | Technology |
-|---|---|
-| Framework | Angular 21.1.0 |
-| Language | TypeScript 5.9 |
-| Styling | Bootstrap 5.3.8 + custom SCSS theming |
-| Testing | Vitest 4.x |
-| Package Manager | npm 11.x |
-| Build Tool | Angular CLI / `@angular/build` |
+## Povestea paginii principale
 
----
+Pagina principală este o succesiune de capitole full-screen, în ordinea în care un client descoperă patiseria:
 
-## Project Architecture
+| Secțiune | Ce face |
+|----------|---------|
+| Hero | Fotografie cu masa de candy bar, acoperită de un văl alb-bleu, titlu dezvăluit cuvânt cu cuvânt, bandă cu produsele care curge continuu |
+| Cozonaci | Text sticky în stânga, colaj de fotografii cu parallax în dreapta |
+| Torturi | Trei torturi expuse în dreapta, cu tilt 3D după cursor și plutire lentă. Fără carusel |
+| Candy bar | Galerie orizontală pinned, condusă de scroll-ul vertical (pe mobil: strip nativ cu snap) |
+| Vitrina | Mozaic de fotografii cu „mai multe” |
+| Contact | Hartă Google Maps și card cu telefon, adresă și program. Link-ul Contact din meniu duce aici, nu există pagină separată |
 
-### High-Level Structure
+O singură temă: pagini albe, roz ca accent, bleu pe hero. Culorile secțiunilor, de sus în jos:
+bleu, alb, roz la torturi, apoi alb până la subsol.
+
+Fiecare secțiune are culoare plată, cu margine netă între ele.
+
+## Arhitectură
 
 ```
 src/
-├── app/
-│   ├── core/               # Singleton components: Navbar, Footer, PageNotFound
-│   ├── shared/             # Shared module (reusable declarations/imports)
-│   ├── features/           # Lazy-loaded feature modules
-│   │   ├── dashboard/      # Home / landing page
-│   │   ├── gallery/        # Full product gallery
-│   │   └── work-in-progress/  # Placeholder for upcoming pages
-│   ├── environments/       # environment.ts / environment.prod.ts
-│   ├── app-module.ts
-│   ├── app-routing-module.ts
-│   ├── app.ts
-│   └── app.html
-└── styles.scss             # Global styles & CSS variable theme system
-public/                     # Static assets (images, icons, fonts)
+  styles/                 tokens (primitive → semantice), reset, tipografie, utilitare
+  app/
+    core/
+      services/           PlatformService, MotionService (GSAP), SmoothScrollService (Lenis),
+                          SectionNavigationService, StructuredDataService
+      tokens/             BUSINESS_INFO – telefon, adresă, program, într-un singur loc
+      components/         navbar, footer, scroll-progress, page-not-found
+    shared/
+      directives/         appReveal, appParallax, appTilt, appMarquee
+      components/         app-icon (sprite SVG), app-attribute-list, app-photo-mosaic,
+                          app-status-page, app-map-embed
+      pipes/              safeUrl
+      utils/              PaginatedList (stare pe semnale)
+    features/
+      home/
+        data/             catalog.data.ts (imagini), story.data.ts (texte)
+        models/           GalleryItem, Catalog
+        services/         CatalogRepository (interfață) + StaticCatalogRepository + provideCatalog()
+        sections/         hero, cozonac, torturi, candy-bar, magazin, visit
+        pages/home        compune secțiunile
+      legal/              pagina de termeni și condiții (date firmă în BUSINESS_INFO, text în terms.data.ts)
+      work-in-progress/   pagină „în lucru”
 ```
 
-### Module Map
+Reguli respectate în cod:
 
-| Module | Type | Responsibility |
-|---|---|---|
-| `AppModule` | Root | Bootstraps the app; imports CoreModule & routing |
-| `CoreModule` | Singleton | Declares and exports `Navbar`, `Footer`, `PageNotFound` |
-| `SharedModule` | Shared | Common imports re-exported to feature modules |
-| `DashboardModule` | Feature (lazy) | Home page with hero section, gallery preview, and quote carousel |
-| `GalleryModule` | Feature (lazy) | Full gallery split by category: cakes, candy bar, pastries |
-| `WorkInProgressModule` | Feature (lazy) | Placeholder page for sections under construction |
+- Componentele nu conțin HTML sau stiluri inline; totul e în `.html` și `.scss`, cu clase BEM.
+- Animațiile trec prin `MotionService`, care creează un `gsap.context` per componentă și îl revocă la distrugere. Nimic nu rulează pe server sau când utilizatorul preferă mișcare redusă.
+- Datele (imagini, texte, contact) sunt separate de prezentare și injectate prin token-uri, ca să poată fi înlocuite cu un API fără a atinge secțiunile.
+- Iconițele sunt SVG dintr-un sprite (`public/svg/icons.svg`), nu emoji.
 
-### Routing
+## De ce este HMR oprit pe dev
 
-All feature modules are **lazy-loaded** via `loadChildren`:
+`ng serve` rulează cu `hmr: false` (vezi `angular.json`). HMR-ul de componente înlocuiește DOM-ul unei
+componente păstrând instanța, iar GSAP ScrollTrigger înfășoară elementele fixate în propriul
+`pin-spacer`. După un hot swap, animațiile rămâneau legate de noduri desprinse din pagină, iar
+galeria orizontală de la candy bar nu mai derula. Cu HMR oprit, dev-ul se comportă ca producția.
 
-| Path | Module | Component |
-|---|---|---|
-| `/` | DashboardModule | `Dashboard` — hero + preview |
-| `/gallery` | GalleryModule | `Gallery` — categorised image grid |
-| `/work-in-progress` | WorkInProgressModule | `WorkInProgress` — placeholder |
-| `**` | *(eager)* | `PageNotFound` — 404 page |
+## Imagini
 
-### Components
+Originalele stau in `image-sources/` si nu sunt servite niciodata. `npm run images` le trece prin
+`scripts/optimize-images.mjs` (sharp) si scrie in `public/` versiuni WebP redimensionate la cat
+afiseaza efectiv layout-ul, cu rezerva pentru ecrane retina. Dimensiunile sunt configurate pe folder,
+pentru ca o poza din mozaic se vede mult mai mica decat una din galeria orizontala.
 
-| Component | Location | Description |
-|---|---|---|
-| `App` | `app/` | Root shell with `<router-outlet>` |
-| `Navbar` | `core/components/navbar/` | Responsive nav with dark mode toggle & mobile hamburger menu |
-| `Footer` | `core/components/footer/` | Contact details and social links |
-| `PageNotFound` | `core/components/page-not-found/` | 404 page |
-| `Dashboard` | `features/dashboard/` | Landing page |
-| `Gallery` | `features/gallery/` | Product gallery |
-| `WorkInProgress` | `features/work-in-progress/` | Placeholder page |
+Dupa ce adaugi poze noi in `image-sources/`, ruleaza `npm run images` si adauga-le in
+`src/app/features/home/data/catalog.data.ts`.
 
-### Theming & Design System
+La ultima rulare: 81 de imagini, 32,3 MB -> 8,3 MB (cu 74% mai putin).
 
-Styles are driven by **CSS custom properties** defined in `src/styles.scss`, enabling seamless light/dark switching via a `dark-theme` class toggled on `<body>`:
+Pe langa pozele din galerie, scriptul taie din acelasi original doua imagini derivate:
+`public/hero.webp` (fundalul sectiunii hero, 1600x900) si `public/og-image.jpg` (imaginea de partajare).
 
-```scss
-/* Light theme (default) */
-:root {
-  --bg:       #f8ebdd;
-  --surface:  #fff8f2;
-  --text:     #3f2413;
-  --primary:  #7a4b2a;
-  --accent:   #ff4f93;
-  --accent-2: #5ee7ff;
+## SEO si partajare
+
+`StructuredDataService` construieste marcajul schema.org (tip Bakery: adresa, telefon, program,
+coordonate) din acelasi `BUSINESS_INFO` pe care il afiseaza paginile, si il scrie in `<head>`.
+Fiind prerandat, apare direct in HTML-ul servit, fara sa fie nevoie de JavaScript.
+
+Eticheta Open Graph si imaginea de partajare (`public/og-image.jpg`, generata de `npm run images`)
+sunt in `src/index.html`.
+
+Inainte de lansare seteaza `siteUrl` din `business-info.token.ts` si adresele absolute din
+`index.html` la domeniul real.
+
+## Punere pe server (nginx)
+
+`npm run build` face build-ul si genereaza `sitemap.xml` din rutele chiar prerandate. Se urca doar
+continutul folderului `dist/PatiBona/browser`, in radacina domeniului (`base href` este `/`).
+
+Goleste folderul de pe server inainte de copiere. Altfel raman fisierele vechi, iar `/contact/`
+continua sa fie servit din HTML-ul vechi, pentru ca nginx serveste fisierul existent inaintea
+oricarei reguli.
+
+```nginx
+server {
+    root /var/www/patibona;
+    index index.html;
+
+    # Pagina de contact a devenit o sectiune a paginii principale.
+    location = /contact  { return 301 /; }
+    location = /contact/ { return 301 /; }
+
+    # Fisierele si paginile prerandate se servesc direct. Pentru orice altceva
+    # se trimite invelisul gol al aplicatiei, ca sa apara pagina de 404.
+    # Niciodata index.html, care este pagina principala.
+    location / {
+        try_files $uri $uri/index.html /index.csr.html;
+    }
+
+    # Numele fisierelor contin un hash, deci pot sta in cache un an.
+    location ~* \.(js|css|webp|jpg|png|woff2|svg)$ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    # HTML-ul nu se pastreaza in cache, altfel actualizarile raman invizibile.
+    location ~* \.html$ {
+        add_header Cache-Control "public, max-age=0, must-revalidate";
+    }
+
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml text/xml;
 }
 ```
 
-- **Typography:** Poppins (body) · Playfair Display (headings)
-- **Grid:** Bootstrap 5 responsive grid
-- **Transitions:** 0.35 s ease for theme switching
-- **Scroll:** `scroll-behavior: smooth` globally
-
-### State Management
-
-No external state management library. State is held at **component level** using local properties. There are currently no services, guards, interceptors, or pipes beyond Angular built-ins.
-
-### Backend Integration
-
-No backend is integrated yet. All content (gallery items, quotes, product lists) is **hardcoded in components**. Environment files (`environment.ts` / `environment.prod.ts`) are in place for future API configuration.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js ≥ 18
-- npm 11.x (`npm install -g npm@11`)
-- Angular CLI (`npm install -g @angular/cli`)
-
-### Install dependencies
-
-```bash
-npm install
-```
-
-### Development server
-
-```bash
-ng serve
-```
-
-Navigate to `http://localhost:4200/`. The app hot-reloads on file changes.
-
-### Build
-
-```bash
-ng build
-```
-
-Production artifacts are output to `dist/`. The build is optimised and hashed for caching.
-
-### Unit tests
-
-```bash
-ng test
-```
-
-Runs unit tests with [Vitest](https://vitest.dev/).
-
-### Code scaffolding
-
-```bash
-ng generate component features/<name>/components/<component-name>
-```
-
-See `ng generate --help` for all available schematics.
-
----
-
-## Additional Resources
-
-- [Angular Documentation](https://angular.dev)
-- [Angular CLI Reference](https://angular.dev/tools/cli)
-- [Bootstrap 5 Docs](https://getbootstrap.com/docs/5.3/)
-- [Vitest Docs](https://vitest.dev/)
+Aplicatia are si o ruta interna care trimite `/contact` catre sectiunea de contact, deci linkurile
+vechi functioneaza chiar daca regula de nginx lipseste. Redirectul de pe server ramane varianta
+corecta pentru motoarele de cautare.

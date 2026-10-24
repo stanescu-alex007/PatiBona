@@ -1,0 +1,17 @@
+<div class="mosaic" appReveal [revealChildren]="true" [revealStagger]="0.06" [revealY]="36">
+  @for (photo of photos(); track photo.src) {
+    <figure class="mosaic__item frame" data-reveal-child>
+      <img [src]="photo.src" [alt]="photo.alt" loading="lazy" decoding="async" />
+    </figure>
+  }
+</div>
+
+@if (hasMore()) {
+  <div class="mosaic__more">
+    <button type="button" class="btn btn--primary" (click)="loadMore.emit()">
+      {{ moreLabel() }}
+      <span class="mosaic__count">+{{ remaining() }}</span>
+      <app-icon name="arrow-down" />
+    </button>
+  </div>
+}

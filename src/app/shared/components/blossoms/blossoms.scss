@@ -1,0 +1,253 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'mixins' as *;
+
+// Each layout scatters the same pieces differently, so neighbouring sections
+// never repeat. Positions are the centre of each piece: left %, top %, size,
+// tilt. The pieces sit behind the content, faint enough to pass under text.
+$layouts: (
+  a: (
+    flowers: (
+      (2%, 8%, 2.2rem, 10deg),
+      (94%, 12%, 1.5rem, -20deg),
+      (22%, 4%, 1.1rem, 30deg),
+      (70%, 22%, 1.3rem, 15deg),
+      (4%, 46%, 1.4rem, 35deg),
+      (48%, 58%, 1rem, -10deg),
+      (96%, 52%, 2.1rem, 5deg),
+      (30%, 88%, 1.6rem, -15deg),
+      (78%, 84%, 1.2rem, 25deg),
+      (58%, 95%, 1.5rem, 0deg),
+    ),
+    bows: (
+      (12%, 26%, 3.5rem, -12deg),
+      (86%, 70%, 3.2rem, 14deg),
+      (38%, 76%, 2.6rem, -6deg),
+    ),
+    ribbons: (1, 1),
+  ),
+  b: (
+    flowers: (
+      (95%, 6%, 2rem, -12deg),
+      (5%, 16%, 1.4rem, 18deg),
+      (64%, 8%, 1.1rem, 40deg),
+      (30%, 30%, 1.2rem, -20deg),
+      (97%, 36%, 1.3rem, 10deg),
+      (3%, 56%, 2.1rem, -8deg),
+      (55%, 66%, 1rem, 22deg),
+      (88%, 74%, 1.6rem, 22deg),
+      (20%, 86%, 1.2rem, -30deg),
+      (70%, 94%, 1.7rem, 12deg),
+    ),
+    bows: (
+      (84%, 20%, 3.5rem, 10deg),
+      (10%, 72%, 3.2rem, -14deg),
+      (52%, 40%, 2.4rem, 6deg),
+    ),
+    ribbons: (-1, 1),
+  ),
+  c: (
+    flowers: (
+      (4%, 12%, 1.7rem, -10deg),
+      (92%, 8%, 2.2rem, 15deg),
+      (36%, 6%, 1.1rem, 28deg),
+      (80%, 32%, 1.3rem, -25deg),
+      (2%, 34%, 1.2rem, 20deg),
+      (60%, 50%, 1rem, 12deg),
+      (94%, 60%, 1.9rem, 6deg),
+      (14%, 70%, 1.5rem, -14deg),
+      (44%, 88%, 1.3rem, 32deg),
+      (84%, 92%, 1.4rem, -6deg),
+    ),
+    bows: (
+      (18%, 18%, 3.2rem, -10deg),
+      (74%, 62%, 3.5rem, 12deg),
+      (32%, 52%, 2.4rem, 8deg),
+    ),
+    ribbons: (1, -1),
+  ),
+);
+
+:host {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+// ── Ribbons ────────────────────────────────────────────────
+// Two long waves across the section: one solid, one stitched.
+// Wide enough to keep a gentle wave on tablets, where it gets cropped
+// instead of squeezed into tall zigzags.
+.ribbons {
+  position: absolute;
+  top: 50%;
+  left: min(0px, calc((100% - 70rem) / 2));
+  width: max(100%, 70rem);
+  height: min(92%, 44rem);
+  translate: 0 -50%;
+  scale: var(--ribbon-x, 1) var(--ribbon-y, 1);
+  opacity: 0.65;
+
+  // On a phone a long wave only shows as a stray stroke: flowers and bows
+  // decorate better there.
+  @include down($bp-md) {
+    display: none;
+  }
+}
+
+.ribbons__line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+
+  &--a {
+    stroke: var(--ribbon-a);
+    stroke-width: 2.5;
+  }
+
+  &--b {
+    stroke: var(--ribbon-b);
+    stroke-dasharray: 2 10;
+    stroke-width: 2.5;
+  }
+}
+
+// ── Flowers and bows ───────────────────────────────────────
+.blossom,
+.bow {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+  rotate: var(--tilt);
+  animation: blossom-sway 9s var(--ease-in-out) infinite alternate;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+.blossom {
+  opacity: 0.7;
+
+  // Two flower colours, alternating, chosen per section background.
+  &:nth-child(odd) {
+    --petal: var(--odd-petal);
+    --heart: var(--odd-heart);
+  }
+
+  &:nth-child(even) {
+    --petal: var(--even-petal);
+    --heart: var(--even-heart);
+  }
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: -#{$i * 1.3}s;
+    }
+  }
+
+  // Phones: a little smaller and fewer, so the page stays calm.
+  @include down($bp-md) {
+    scale: 0.85;
+
+    &:nth-child(n + 8) {
+      display: none;
+    }
+  }
+}
+
+.blossom__petals {
+  fill: var(--petal);
+}
+
+.blossom__heart {
+  fill: var(--heart);
+}
+
+.bow {
+  opacity: 0.9;
+  animation-duration: 11s;
+
+  &:nth-child(2) {
+    animation-delay: -4s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: -7s;
+  }
+
+  @include down($bp-md) {
+    &:nth-child(n + 3) {
+      display: none;
+    }
+  }
+}
+
+.bow__loop,
+.bow__tail {
+  fill: var(--bow);
+}
+
+.bow__knot {
+  fill: var(--bow-knot);
+}
+
+@keyframes blossom-sway {
+  to {
+    rotate: calc(var(--tilt) + 18deg);
+    translate: 0 -6px;
+  }
+}
+
+// ── Colours per background ─────────────────────────────────
+:host(.blossoms--on-light) {
+  --odd-petal: var(--pink-300);
+  --odd-heart: #e889ae;
+  --even-petal: var(--blue-300);
+  --even-heart: var(--white);
+  --bow: var(--pink-300);
+  --bow-knot: #e889ae;
+  --ribbon-a: var(--pink-300);
+  --ribbon-b: var(--blue-300);
+}
+
+:host(.blossoms--on-pink) {
+  --odd-petal: var(--white);
+  --odd-heart: var(--pink-300);
+  --even-petal: var(--blue-300);
+  --even-heart: var(--white);
+  --bow: var(--white);
+  --bow-knot: var(--pink-300);
+  --ribbon-a: var(--white);
+  --ribbon-b: var(--blue-300);
+}
+
+// ── Layouts ────────────────────────────────────────────────
+@mixin place($pieces, $selector) {
+  @for $i from 1 through list.length($pieces) {
+    $p: list.nth($pieces, $i);
+
+    #{$selector}:nth-child(#{$i}) {
+      left: list.nth($p, 1);
+      top: list.nth($p, 2);
+      --size: #{list.nth($p, 3)};
+      --tilt: #{list.nth($p, 4)};
+    }
+  }
+}
+
+@each $name, $layout in $layouts {
+  :host(.blossoms--#{$name}) {
+    $flip: map.get($layout, ribbons);
+
+    --ribbon-x: #{list.nth($flip, 1)};
+    --ribbon-y: #{list.nth($flip, 2)};
+
+    @include place(map.get($layout, flowers), '.blossom');
+    @include place(map.get($layout, bows), '.bow');
+  }
+}

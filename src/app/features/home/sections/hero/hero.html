@@ -1,0 +1,52 @@
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__backdrop" aria-hidden="true">
+    <span class="hero__glow hero__glow--pink"></span>
+    <span class="hero__glow hero__glow--white"></span>
+  </div>
+
+  <app-blossoms layout="c" tone="light" />
+
+  <div class="hero__photos" aria-hidden="true">
+    @for (photo of photos; track photo.src) {
+      <div class="hero__photo" data-hero="photo" [attr.data-depth]="photo.depth">
+        <figure class="hero__polaroid">
+          <img [src]="photo.src" alt="" width="560" height="700" decoding="async" />
+        </figure>
+      </div>
+    }
+  </div>
+
+  <div class="hero__content container" data-hero="content">
+    <h1 id="hero-title" class="hero__title display-hero">
+      <span class="hero__line">
+        <span class="hero__word" data-hero="word">Gustul</span>
+        <span class="hero__word" data-hero="word">de</span>
+        <span class="hero__word hero__word--accent" data-hero="word">acasă</span>
+      </span>
+    </h1>
+
+    <p class="hero__lead" data-hero="lead">{{ copy.lead }}</p>
+
+    <div class="hero__actions" data-hero="actions">
+      <button type="button" class="btn btn--primary" (click)="goToProducts()">
+        Descoperă produsele
+        <app-icon name="arrow-down" />
+      </button>
+      <a class="btn btn--secondary" [href]="'tel:' + business.phone">
+        <app-icon name="phone" />
+        {{ business.phoneDisplay }}
+      </a>
+    </div>
+  </div>
+
+  <div class="hero__marquee" aria-hidden="true" data-hero="marquee">
+    <div class="hero__marquee-track" appMarquee>
+      <div class="hero__marquee-group">
+        @for (item of marquee; track $index) {
+          <span class="hero__marquee-item">{{ item }}</span>
+          <span class="hero__marquee-dot"></span>
+        }
+      </div>
+    </div>
+  </div>
+</section>

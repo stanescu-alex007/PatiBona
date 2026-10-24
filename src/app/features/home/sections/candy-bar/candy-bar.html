@@ -1,0 +1,53 @@
+<section id="candy-bar" class="candy" aria-labelledby="candy-title">
+  <app-blossoms layout="c" tone="light" />
+
+  <div class="candy__pin" #pin>
+    <app-blossoms layout="b" tone="light" />
+    <div class="candy__track" #track>
+      <div class="candy__panel candy__panel--intro" appReveal [revealChildren]="true">
+        <h2 id="candy-title" class="display-2xl" data-reveal-child>{{ copy.title }}</h2>
+        <p class="lead" data-reveal-child>{{ copy.lead }}</p>
+        <p class="candy__hint" data-reveal-child>
+          <span class="candy__hint-line" aria-hidden="true"></span>
+          {{ copy.hint }}
+          <app-icon name="arrow-right" />
+        </p>
+      </div>
+
+      @for (item of showcase; track item.src) {
+        <figure class="candy__panel candy__card">
+          <div class="candy__frame frame">
+            <img [src]="item.src" [alt]="item.alt" loading="lazy" decoding="async" />
+          </div>
+        </figure>
+      }
+
+      <div class="candy__panel candy__panel--outro">
+        <p class="candy__outro-title display-xl">
+          @for (line of copy.outro; track $index) {
+            <span class="candy__outro-line">{{ line }}</span>
+          }
+        </p>
+        <a class="btn btn--primary" [href]="'tel:' + business.phone">
+          <app-icon name="phone" />
+          Hai să vorbim
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="candy__details container">
+    <div class="candy__details-head" appReveal [revealChildren]="true">
+      <h3 class="display-xl" data-reveal-child>{{ copy.detailsTitle }}</h3>
+      <p class="lead" data-reveal-child>{{ copy.detailsLead }}</p>
+    </div>
+
+    <app-photo-mosaic
+      [photos]="details.visible()"
+      [hasMore]="details.hasMore()"
+      [remaining]="details.remaining()"
+      moreLabel="Mai multe dulciuri"
+      (loadMore)="details.loadMore()"
+    />
+  </div>
+</section>

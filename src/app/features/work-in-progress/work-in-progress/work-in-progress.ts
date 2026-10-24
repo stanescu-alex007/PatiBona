@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { StatusPage } from '../../../shared/components/status-page/status-page';
 
 @Component({
   selector: 'app-work-in-progress',
   standalone: true,
-  imports: [RouterLink],
+  imports: [StatusPage],
   templateUrl: './work-in-progress.html',
-  styleUrl: './work-in-progress.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkInProgress {}

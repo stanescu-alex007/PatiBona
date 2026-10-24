@@ -1,0 +1,251 @@
+@use 'sass:map';
+@use 'mixins' as *;
+
+$marquee-gap: 2rem;
+
+:host {
+  display: block;
+}
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: var(--ink);
+  padding-block: calc(var(--nav-height) + var(--space-6)) var(--space-8);
+  isolation: isolate;
+  background: var(--bg-hero);
+}
+
+/** Baby blue sky with a blush of pink and a pool of light behind the title. */
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--blue-200) 0%, var(--blue-100) 70%, var(--white) 100%);
+}
+
+.hero__glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+
+  &--pink {
+    inset: auto -10% -35% auto;
+    width: 70vmax;
+    aspect-ratio: 1;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--pink-300) 70%, transparent), transparent);
+  }
+
+  &--white {
+    inset: 50% auto auto 50%;
+    width: min(70rem, 110vw);
+    aspect-ratio: 16 / 10;
+    translate: -50% -50%;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.55) 55%, transparent);
+  }
+}
+
+// ── Polaroids ──────────────────────────────────────────────
+// Each photo is placed by position: the four corners first, then two small
+// ones tucked beside a corner photo, above and below the title. Sizes take the
+// smaller of a width and a height share, so wide screens do not blow them up
+// into each other, and the small ones sit a fixed gap from their neighbour.
+// GSAP moves .hero__photo, the CSS float moves .hero__polaroid, so the two
+// never fight over transform.
+$size-tl: min(13vw, 25vh);
+$size-br: min(14vw, 27vh);
+$photo-gap: 2.5rem;
+
+$photos: (
+  1: (left: 4%, top: 14%, width: $size-tl, tilt: -7deg, float: 7s),
+  2: (left: 8%, bottom: 9%, width: min(12vw, 24vh), tilt: 5deg, float: 8.5s),
+  3: (right: 5%, top: 13%, width: min(12vw, 23vh), tilt: 6deg, float: 7.8s),
+  4: (right: 8%, bottom: 9%, width: $size-br, tilt: -4deg, float: 9s),
+  5: (left: calc(4% + #{$size-tl} + #{$photo-gap}), top: calc(var(--nav-height) + 1.75rem), width: min(7vw, 14vh), tilt: 8deg, float: 6.5s),
+  6:
+    (
+      right: calc(8% + #{$size-br} + #{$photo-gap}),
+      bottom: 10%,
+      width: min(7.5vw, 15vh),
+      tilt: -7deg,
+      float: 7.2s,
+    ),
+);
+
+$photos-mobile: (
+  1: (left: -7%, top: 12%, width: 28vw, tilt: -8deg),
+  2: (left: -5%, bottom: 9.5%, width: 27vw, tilt: 6deg),
+  3: (right: -7%, top: 12.5%, width: 26vw, tilt: 8deg),
+  4: (right: -6%, bottom: 9%, width: 30vw, tilt: -5deg),
+);
+
+.hero__photos {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero__photo {
+  position: absolute;
+  will-change: transform;
+}
+
+.hero__polaroid {
+  padding: clamp(0.3rem, 0.6vw, 0.55rem);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+  rotate: var(--tilt);
+  animation: hero-float var(--float, 8s) var(--ease-in-out) infinite alternate;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: calc(var(--radius-md) - 0.35rem);
+  }
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes hero-float {
+  to {
+    translate: 0 -14px;
+    rotate: calc(var(--tilt) * 0.6);
+  }
+}
+
+@include down($bp-lg) {
+  @each $i, $p in $photos-mobile {
+    .hero__photo:nth-child(#{$i}) {
+      @each $prop in (left, right, top, bottom, width) {
+        @if map.has-key($p, $prop) {
+          #{$prop}: map.get($p, $prop);
+        }
+      }
+
+      .hero__polaroid {
+        --tilt: #{map.get($p, tilt)};
+      }
+    }
+  }
+
+  .hero__photo:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+@include up($bp-lg) {
+  @each $i, $p in $photos {
+    .hero__photo:nth-child(#{$i}) {
+      @each $prop in (left, right, top, bottom, width) {
+        @if map.has-key($p, $prop) {
+          #{$prop}: map.get($p, $prop);
+        }
+      }
+
+      .hero__polaroid {
+        --tilt: #{map.get($p, tilt)};
+        --float: #{map.get($p, float)};
+      }
+    }
+  }
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-5);
+  will-change: transform, opacity;
+}
+
+.hero__title {
+  color: var(--ink);
+}
+
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.hero__word {
+  display: inline-block;
+  margin-inline: 0.11em;
+  will-change: transform;
+
+  &--accent {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--primary);
+  }
+}
+
+.hero__lead {
+  max-width: 46ch;
+  font-size: var(--text-md);
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+// ── Marquee ────────────────────────────────────────────────
+.hero__marquee {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding-block: 1rem;
+  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+// appMarquee clones the group and drives the slide, so the track only needs
+// to lay the groups out in a row.
+.hero__marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+// Each group carries its own trailing gap, so every group is identical in
+// width and a shift of exactly one group is invisible.
+.hero__marquee-group {
+  display: flex;
+  align-items: center;
+  gap: $marquee-gap;
+  padding-right: $marquee-gap;
+}
+
+.hero__marquee-item {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-style: italic;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.hero__marquee-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}

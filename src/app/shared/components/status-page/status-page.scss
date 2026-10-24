@@ -1,0 +1,39 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.status {
+  @include screen-section;
+  padding-block: calc(var(--nav-height) + var(--space-8)) var(--space-8);
+  text-align: center;
+}
+
+.status__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  max-width: 44rem;
+}
+
+.status__mark {
+  width: clamp(7rem, 20vw, 10rem);
+  height: auto;
+  animation: float 4s ease-in-out infinite;
+
+  @include reduced-motion {
+    animation: none;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}

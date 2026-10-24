@@ -1,38 +1,184 @@
-.site-footer {
-  padding-bottom: 1rem;
+@use 'mixins' as *;
+
+.footer {
+  background: var(--bg-deep);
+  color: var(--ink);
+  // On phones the last line needs to clear the WhatsApp bubble.
+  padding-block: var(--space-7) calc(var(--space-5) + 4.5rem);
+  border-top: 1px solid var(--border);
+
+  @include up($bp-lg) {
+    padding-bottom: var(--space-5);
+  }
 }
 
-.footer-box {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+.footer__inner {
+  display: grid;
+  gap: var(--space-6);
   align-items: center;
-  padding: 1.25rem 1.5rem;
-  border-radius: 28px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  // Stacked and centred on phones and tablets; three columns on desktop.
+  justify-items: center;
+  text-align: center;
 
-  h3 {
-    margin: 0 0 0.35rem;
-  }
-
-  p {
-    margin: 0;
-    color: var(--text-soft);
+  @include up($bp-lg) {
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-7);
+    justify-items: stretch;
+    text-align: left;
   }
 }
 
-.footer-phone {
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 700;
-  white-space: nowrap;
+// ── Brand ──────────────────────────────────────────────────
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+
+  @include up($bp-lg) {
+    flex-direction: row;
+  }
 }
 
-@media (max-width: 767.98px) {
-  .footer-box {
-    flex-direction: column;
-    align-items: flex-start;
+.footer__logo {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: contain;
+}
+
+.footer__wordmark {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.footer__tagline {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+// ── Links ──────────────────────────────────────────────────
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem 1.25rem;
+}
+
+.footer__link {
+  position: relative;
+  padding-block: 0.25rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: color var(--dur-fast) var(--ease-out);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  @include hover {
+    color: var(--ink);
+
+    &::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+}
+
+// ── Contact ────────────────────────────────────────────────
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+
+  @include up($bp-lg) {
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+.footer__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--ink);
+  transition: color var(--dur-fast) var(--ease-out);
+
+  @include hover {
+    color: var(--accent);
+  }
+}
+
+.footer__address {
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  transition: color var(--dur-fast) var(--ease-out);
+
+  @include hover {
+    color: var(--ink);
+  }
+}
+
+// ── Bottom bar ─────────────────────────────────────────────
+.footer__bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+
+  @include up($bp-lg) {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+.footer__legal {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--dur-fast) var(--ease-out);
+
+  @include hover {
+    color: var(--accent);
+  }
+}
+
+.footer__top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+  transition:
+    gap var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+
+  @include hover {
+    gap: 0.8rem;
+    color: var(--ink);
   }
 }
