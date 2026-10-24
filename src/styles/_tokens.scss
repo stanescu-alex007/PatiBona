@@ -1,0 +1,100 @@
+// ─────────────────────────────────────────────────────────────
+//  DESIGN TOKENS · Pati Bona
+//  One theme: white pages, pink as the voice, baby blue for the hero.
+//  Layers: primitives → semantic (here) → component (in components)
+//  Every text colour below clears 4.5:1 on the backgrounds it is used on.
+// ─────────────────────────────────────────────────────────────
+:root {
+  // Primitives
+  --white: #ffffff;
+  --pink-50: #fdf8fb;
+  --pink-100: #f9eef4;
+  --pink-200: #fce7f0;
+  --pink-300: #f7c8dd;
+  --pink-500: #c92e69;
+  --pink-600: #b02a5c;
+  --blue-100: #e8f4fc;
+  --blue-200: #d3e9f7;
+  --blue-300: #b6dbf2;
+  --slate-900: #2b2733;
+  --slate-600: #575265;
+  --slate-400: #6b6680;
+
+  // Semantic
+  --bg: var(--white);
+  --bg-elevated: var(--white);
+  /** The one tinted band in the page flow: the cakes section. */
+  --bg-contrast: var(--pink-200);
+  --bg-deep: var(--white);
+  --bg-hero: var(--blue-200);
+  --surface: var(--white);
+  --surface-2: var(--pink-100);
+  --ink: var(--slate-900);
+  --ink-soft: var(--slate-600);
+  --ink-muted: var(--slate-400);
+  /** Pink text on light backgrounds: labels, links, chapter marks. */
+  --primary: var(--pink-600);
+  --primary-strong: var(--pink-500);
+  --on-primary: var(--white);
+  /** Pink as a filled surface: buttons. */
+  --accent: var(--pink-500);
+  --accent-strong: var(--pink-600);
+  --accent-soft: var(--pink-200);
+  --on-accent: var(--white);
+  --blue: var(--blue-200);
+  --blue-soft: var(--blue-100);
+  --border: rgba(43, 39, 51, 0.12);
+  --border-strong: rgba(43, 39, 51, 0.24);
+  --shadow-sm: 0 4px 14px rgba(43, 39, 51, 0.07);
+  --shadow-md: 0 16px 40px rgba(43, 39, 51, 0.1);
+  --shadow-lg: 0 30px 80px rgba(43, 39, 51, 0.16);
+
+  // Typography
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+  --text-lg: clamp(1.25rem, 1.05rem + 0.8vw, 1.75rem);
+  --text-xl: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  --text-2xl: clamp(2.25rem, 1.5rem + 3vw, 4rem);
+  --text-3xl: clamp(2.75rem, 1.6rem + 5vw, 6rem);
+  --text-hero: clamp(3rem, 1.5rem + 8vw, 9rem);
+  --leading-tight: 1.02;
+  --leading-snug: 1.2;
+  --leading-body: 1.65;
+  --tracking-caps: 0.18em;
+
+  // Spacing (spacious density)
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --container: 1400px;
+  --nav-height: 5rem;
+
+  // Shape
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.75rem;
+  --radius-xl: 2.5rem;
+  --radius-pill: 999px;
+
+  // Motion
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+
+  color-scheme: light;
+}

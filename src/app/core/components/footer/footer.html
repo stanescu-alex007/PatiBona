@@ -1,14 +1,42 @@
-<footer class="site-footer">
-  <div class="container py-4">
-    <div class="footer-box">
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__brand">
+      <img class="footer__logo" src="/app-logo.webp" alt="" width="72" height="72" loading="lazy" />
       <div>
-        <h3>Patiseria Bunicii</h3>
-        <p>Prăjituri făcute cu dragoste, ingrediente curate și gust de acasă.</p>
+        <p class="footer__wordmark">{{ business.name }}</p>
+        <p class="footer__tagline">
+          {{ business.tagline }} · Craiova, din {{ business.foundedYear }}
+        </p>
       </div>
+    </div>
 
-      <a href="tel:+40724228751" class="footer-phone">
-        📞 0724228751
+    <nav class="footer__nav" aria-label="Secțiuni">
+      @for (section of sections; track section.id) {
+        <button type="button" class="footer__link" (click)="goToSection(section.id)">
+          {{ section.label }}
+        </button>
+      }
+    </nav>
+
+    <div class="footer__contact">
+      <a class="footer__phone" [href]="'tel:' + business.phone">
+        <app-icon name="phone" />
+        {{ business.phoneDisplay }}
+      </a>
+      <a class="footer__address" [href]="business.mapsUrl" target="_blank" rel="noopener">
+        {{ business.address.street }}, {{ business.address.city }}
       </a>
     </div>
+  </div>
+
+  <div class="footer__bottom container">
+    <p class="footer__copy">
+      © {{ year }} {{ business.company.legalName }} ·
+      <a routerLink="/termeni-si-conditii" class="footer__legal">Termeni și condiții</a>
+    </p>
+    <button type="button" class="footer__top-btn" (click)="toTop()">
+      Înapoi sus
+      <app-icon name="arrow-up-right" />
+    </button>
   </div>
 </footer>

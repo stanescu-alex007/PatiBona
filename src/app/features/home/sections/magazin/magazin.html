@@ -1,0 +1,18 @@
+<section id="vitrina" class="vitrina" aria-labelledby="vitrina-title">
+  <div class="container">
+    <div class="vitrina__head" appReveal [revealChildren]="true">
+      <div class="vitrina__intro">
+        <h2 id="vitrina-title" class="display-2xl" data-reveal-child>{{ copy.title }}</h2>
+        <p class="lead" data-reveal-child>{{ copy.lead }}</p>
+      </div>
+    </div>
+
+    <app-photo-mosaic
+      [photos]="list.visible()"
+      [hasMore]="list.hasMore()"
+      [remaining]="list.remaining()"
+      moreLabel="Mai multe prăjituri"
+      (loadMore)="list.loadMore()"
+    />
+  </div>
+</section>

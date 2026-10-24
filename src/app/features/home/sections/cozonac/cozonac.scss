@@ -1,0 +1,66 @@
+@use 'mixins' as *;
+
+:host {
+  display: block;
+}
+
+.cozonac {
+  position: relative;
+  padding-block: var(--space-7) var(--space-7);
+  background: var(--bg);
+
+  @include up($bp-lg) {
+    padding-block: var(--space-8) var(--space-8);
+  }
+}
+
+.cozonac__grid {
+  display: grid;
+  gap: var(--space-8);
+
+  @include up($bp-lg) {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-9);
+    align-items: center;
+  }
+}
+
+.cozonac__sticky {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+// Three photos share the section height evenly: one wide, then two halves.
+// Capped to one screen on desktop so text and images finish together.
+.cozonac__collage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  aspect-ratio: 1 / 1;
+
+  @include up($bp-lg) {
+    gap: 1.25rem;
+    aspect-ratio: auto;
+    height: min(72svh, 46rem);
+  }
+}
+
+.cozonac__frame {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  min-height: 0;
+
+  img {
+    // Oversize so the parallax travel never exposes the frame edge.
+    height: 124%;
+    margin-top: -12%;
+    will-change: transform;
+  }
+
+  &:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+}

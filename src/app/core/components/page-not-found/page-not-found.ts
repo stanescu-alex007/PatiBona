@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { StatusPage } from '../../../shared/components/status-page/status-page';
 
 @Component({
   selector: 'app-page-not-found',
   standalone: true,
-  imports: [RouterLink],
+  imports: [StatusPage],
   templateUrl: './page-not-found.html',
-  styleUrl: './page-not-found.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageNotFound {}

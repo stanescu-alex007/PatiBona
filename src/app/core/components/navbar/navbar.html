@@ -1,46 +1,57 @@
-<header class="nav-wrapper">
-  <div class="container py-3">
-    <nav class="navbar-pill" [class.open]="mobileOpen()">
+<header class="nav">
+  <div class="nav__bar container">
+    <a routerLink="/" class="nav__brand" (click)="goToTop()" aria-label="Pati Bona, înapoi sus">
+      <img class="nav__logo" src="/app-logo.webp" alt="" width="48" height="48" />
+      <span class="nav__wordmark">Pati Bona</span>
+    </a>
 
-      <div class="nav-top">
-
-        <!-- LEFT (logo) -->
-        <a routerLink="/" class="brand">
-          <img class="brand-mark" src="/app-logo.png" />
-        </a>
-
-        <!-- CENTER (links desktop) -->
-        <div class="nav-links desktop center-links">
-          <a routerLink="/">Acasă</a>
-          <a (click)="scrollTo('cozonac')">Cozonaci</a>
-          <a (click)="scrollTo('torturi')">Torturi</a>
-          <a (click)="scrollTo('candy-bar')">Candy Bar</a>
-          <a (click)="scrollTo('magazin')">Magazin</a>
-          <a routerLink="/contact">Contact</a>
-        </div>
-
-        <!-- RIGHT (actions) -->
-        <div class="nav-actions">
-          <img class="theme-btn desktop" [src]="darkMode() ? 'svg/sun.svg' : 'svg/moon.svg'" (click)="toggleTheme()" />
-
-          <div class="mobile-toggle d-lg-none" (click)="toggleMobile()">
-            ☰
-          </div>
-        </div>
-
-      </div>
-
-      <!-- MOBILE MENU -->
-      <div class="nav-links mobile" [class.open]="mobileOpen()">
-        <a routerLink="/" (click)="closeMobile()">Acasă</a>
-        <a (click)="scrollTo('cozonac')">Cozonaci</a>
-        <a (click)="scrollTo('torturi')">Torturi</a>
-        <a (click)="scrollTo('candy-bar')">Candy Bar</a>
-        <a (click)="scrollTo('magazin')">Magazin</a>
-        <a routerLink="/contact" (click)="closeMobile()">Contact</a>
-        <img class="theme-btn mobile" [src]="darkMode() ? 'svg/sun.svg' : 'svg/moon.svg'" (click)="toggleTheme()" />
-      </div>
-
+    <nav class="nav__links" aria-label="Secțiuni">
+      @for (section of sections; track section.id) {
+        <button type="button" class="nav__link" (click)="goToSection(section.id)">
+          {{ section.label }}
+        </button>
+      }
     </nav>
+
+    <div class="nav__actions">
+      <a class="btn btn--primary nav__cta" [href]="'tel:' + business.phone">
+        <app-icon name="phone" />
+        <span>Comandă</span>
+      </a>
+
+      <button
+        type="button"
+        class="btn btn--icon nav__burger"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="meniu-mobil"
+        [attr.aria-label]="menuOpen() ? 'Închide meniul' : 'Deschide meniul'"
+      >
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+      </button>
+    </div>
   </div>
 </header>
+
+<div id="meniu-mobil" class="menu" [class.menu--open]="menuOpen()" [attr.aria-hidden]="!menuOpen()">
+  <nav class="menu__inner container" aria-label="Meniu principal">
+    <ul class="menu__list">
+      @for (section of sections; track section.id; let i = $index) {
+        <li class="menu__item">
+          <button type="button" class="menu__link" (click)="goToSection(section.id)" [tabindex]="menuOpen() ? 0 : -1">
+            <span class="menu__index">0{{ i + 1 }}</span>
+            <span class="menu__label">{{ section.label }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+
+    <div class="menu__footer">
+      <a class="menu__phone" [href]="'tel:' + business.phone" [tabindex]="menuOpen() ? 0 : -1">
+        <app-icon name="phone" />
+        {{ business.phoneDisplay }}
+      </a>
+      <p class="menu__address">{{ business.address.street }}, {{ business.address.city }}</p>
+    </div>
+  </nav>
+</div>

@@ -1,0 +1,56 @@
+<section id="torturi" class="torturi" aria-labelledby="torturi-title">
+  <div class="torturi__grid container">
+    <div class="torturi__text" appReveal [revealChildren]="true">
+      <p class="eyebrow" data-reveal-child>{{ copy.eyebrow }}</p>
+      <h2 id="torturi-title" class="display-2xl" data-reveal-child>
+        {{ copy.title }}
+        <em class="torturi__accent">{{ copy.titleAccent }}</em>
+      </h2>
+      <p class="lead torturi__lead" data-reveal-child>{{ copy.lead }}</p>
+      <app-attribute-list class="torturi__attrs" [items]="copy.attributes" data-reveal-child />
+      <a class="btn btn--primary" [href]="'tel:' + business.phone" data-reveal-child>
+        <app-icon name="phone" />
+        Comandă un tort
+      </a>
+    </div>
+
+    <div class="torturi__stage" appReveal [revealChildren]="true" [revealStagger]="0.14" [revealY]="56">
+      <div class="torturi__arch" aria-hidden="true"></div>
+
+      <ul class="torturi__display">
+        @for (cake of cakes; track cake.src) {
+          <li class="torturi__item" data-reveal-child>
+            <div class="torturi__tilt" appTilt [tiltMax]="8">
+              <img class="torturi__cake" [src]="cake.src" [alt]="cake.alt" loading="lazy" decoding="async" />
+            </div>
+            <span class="torturi__stand" aria-hidden="true"></span>
+          </li>
+        }
+      </ul>
+
+      <div class="torturi__shelf" aria-hidden="true"></div>
+
+      <span class="torturi__sprinkle" aria-hidden="true"><app-icon name="sparkles" /></span>
+      <span class="torturi__sprinkle" aria-hidden="true"><app-icon name="heart" /></span>
+      <span class="torturi__sprinkle" aria-hidden="true"><app-icon name="star" /></span>
+    </div>
+  </div>
+
+  <div class="torturi__gallery" appReveal>
+    <p class="torturi__gallery-label container">
+      <app-icon name="cake" />
+      {{ copy.galleryLabel }}
+    </p>
+    <div class="torturi__ribbon">
+      <div class="torturi__ribbon-track" appMarquee [marqueeSpeed]="30">
+        <ul class="torturi__ribbon-group">
+          @for (cake of gallery; track cake.src) {
+            <li class="torturi__thumb">
+              <img [src]="cake.src" [alt]="cake.alt" loading="lazy" decoding="async" />
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

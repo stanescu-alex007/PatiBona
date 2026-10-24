@@ -1,0 +1,30 @@
+<section id="cozonac" class="cozonac" aria-labelledby="cozonac-title">
+  <div class="cozonac__grid container">
+    <div class="cozonac__text">
+      <div class="cozonac__sticky" appReveal [revealChildren]="true">
+        <h2 id="cozonac-title" class="display-2xl" data-reveal-child>{{ copy.title }}</h2>
+        <p class="lead" data-reveal-child>{{ copy.lead }}</p>
+        <app-attribute-list [items]="copy.attributes" data-reveal-child />
+        <a class="btn btn--primary" [href]="'tel:' + business.phone" data-reveal-child>
+          <app-icon name="phone" />
+          Comandă cozonac
+        </a>
+      </div>
+    </div>
+
+    <div class="cozonac__collage">
+      @for (image of images; track image.src; let i = $index) {
+        <figure class="cozonac__frame frame" appReveal [revealY]="60" [revealAt]="0.92">
+          <img
+            [src]="image.src"
+            [alt]="image.alt"
+            loading="lazy"
+            decoding="async"
+            appParallax
+            [parallaxSpeed]="depths[i]"
+          />
+        </figure>
+      }
+    </div>
+  </div>
+</section>

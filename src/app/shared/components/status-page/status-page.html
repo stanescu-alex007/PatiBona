@@ -1,0 +1,12 @@
+<section class="status">
+  <div class="status__inner container" appReveal [revealChildren]="true">
+    <img class="status__mark" src="/app-favicon.webp" alt="" width="160" height="160" data-reveal-child />
+    <p class="eyebrow eyebrow--plain" data-reveal-child>{{ eyebrow() }}</p>
+    <h1 class="display-2xl" data-reveal-child>{{ heading() }}</h1>
+    <p class="lead" data-reveal-child>{{ text() }}</p>
+    <a routerLink="/" class="btn btn--primary" data-reveal-child>
+      Înapoi acasă
+      <app-icon name="arrow-right" />
+    </a>
+  </div>
+</section>

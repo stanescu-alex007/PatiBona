@@ -1,3 +1,21 @@
-.app-shell {
-  min-height: 100vh;
+.app-main {
+  min-height: 100svh;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform var(--dur-base) var(--ease-out);
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
 }

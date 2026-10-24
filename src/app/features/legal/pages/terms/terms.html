@@ -1,0 +1,71 @@
+<article class="legal">
+  <header class="legal__head container" appReveal [revealChildren]="true">
+    <p class="eyebrow" data-reveal-child>Actualizat la {{ updatedAt }}</p>
+    <h1 class="display-2xl" data-reveal-child>Termeni și condiții</h1>
+    <p class="lead" data-reveal-child>{{ intro }}</p>
+  </header>
+
+  <div class="legal__body container">
+    <section class="legal__section legal__section--card" appReveal>
+      <h2 class="legal__title">Cine suntem</h2>
+      <dl class="legal__facts">
+        <div class="legal__fact">
+          <dt>Denumire</dt>
+          <dd>{{ company.legalName }}</dd>
+        </div>
+        <div class="legal__fact">
+          <dt>Cod unic de înregistrare</dt>
+          <dd>{{ company.fiscalCode }} · TVA {{ company.vatNumber }}</dd>
+        </div>
+        <div class="legal__fact">
+          <dt>Nr. Registrul Comerțului</dt>
+          <dd>{{ company.tradeRegister }}</dd>
+        </div>
+        <div class="legal__fact">
+          <dt>Sediu social</dt>
+          <dd>{{ company.registeredOffice }}</dd>
+        </div>
+        <div class="legal__fact">
+          <dt>Punct de lucru</dt>
+          <dd>{{ business.address.street }}, {{ business.address.postalCode }} {{ business.address.city }}</dd>
+        </div>
+        <div class="legal__fact">
+          <dt>Obiect de activitate</dt>
+          <dd>{{ company.activity }}</dd>
+        </div>
+        <div class="legal__fact">
+          <dt>Telefon</dt>
+          <dd><a [href]="'tel:' + business.phone">{{ business.phoneDisplay }}</a></dd>
+        </div>
+      </dl>
+    </section>
+
+    @for (section of sections; track section.id) {
+      <section class="legal__section" [attr.id]="section.id" appReveal>
+        <h2 class="legal__title">{{ section.title }}</h2>
+        @for (paragraph of section.paragraphs; track $index) {
+          <p class="legal__text">{{ paragraph }}</p>
+        }
+        @if (section.bullets; as bullets) {
+          <ul class="legal__list">
+            @for (bullet of bullets; track $index) {
+              <li>{{ bullet }}</li>
+            }
+          </ul>
+        }
+        @if (section.id === 'reclamatii') {
+          <ul class="legal__links">
+            @for (link of links; track link.url) {
+              <li>
+                <a [href]="link.url" target="_blank" rel="noopener">
+                  {{ link.label }}
+                  <app-icon name="arrow-up-right" />
+                </a>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+    }
+  </div>
+</article>
