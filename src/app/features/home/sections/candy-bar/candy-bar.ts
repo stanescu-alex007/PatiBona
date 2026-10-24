@@ -7,6 +7,7 @@ import {
   inject,
   viewChild,
 } from '@angular/core';
+import { Blossoms } from '../../../../shared/components/blossoms/blossoms';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { PhotoMosaic } from '../../../../shared/components/photo-mosaic/photo-mosaic';
 import { RevealDirective } from '../../../../shared/directives/reveal.directive';
@@ -32,7 +33,7 @@ const GALLERY_QUERY = '(min-width: 768px)';
 @Component({
   selector: 'app-candy-bar-section',
   standalone: true,
-  imports: [Icon, PhotoMosaic, RevealDirective],
+  imports: [Blossoms, Icon, PhotoMosaic, RevealDirective],
   templateUrl: './candy-bar.html',
   styleUrl: './candy-bar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

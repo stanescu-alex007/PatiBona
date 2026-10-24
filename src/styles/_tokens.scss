@@ -16,6 +16,9 @@
   --blue-100: #e8f4fc;
   --blue-200: #d3e9f7;
   --blue-300: #b6dbf2;
+  --blue-400: #7cc4ec;
+  --blue-500: #62b6e6;
+  --blue-glow: #3a9fdc;
   --slate-900: #2b2733;
   --slate-600: #575265;
   --slate-400: #6b6680;
@@ -41,6 +44,11 @@
   --accent-strong: var(--pink-600);
   --accent-soft: var(--pink-200);
   --on-accent: var(--white);
+  /** Baby blue as a filled surface: the second button beside a pink one. */
+  --secondary: var(--blue-400);
+  --secondary-strong: var(--blue-500);
+  --secondary-glow: var(--blue-glow);
+  --on-secondary: var(--white);
   --blue: var(--blue-200);
   --blue-soft: var(--blue-100);
   --border: rgba(43, 39, 51, 0.12);

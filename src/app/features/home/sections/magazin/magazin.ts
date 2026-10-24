@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Blossoms } from '../../../../shared/components/blossoms/blossoms';
 import { PhotoMosaic } from '../../../../shared/components/photo-mosaic/photo-mosaic';
 import { RevealDirective } from '../../../../shared/directives/reveal.directive';
 import { PaginatedList } from '../../../../shared/utils/paginated-list';
@@ -11,7 +12,7 @@ const VITRINA_PAGE = 8;
 @Component({
   selector: 'app-magazin-section',
   standalone: true,
-  imports: [PhotoMosaic, RevealDirective],
+  imports: [Blossoms, PhotoMosaic, RevealDirective],
   templateUrl: './magazin.html',
   styleUrl: './magazin.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

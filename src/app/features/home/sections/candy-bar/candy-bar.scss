@@ -13,13 +13,18 @@
 
 .candy {
   position: relative;
+  isolation: isolate;
   background: var(--bg);
 }
 
 // ── Horizontal showcase ────────────────────────────────────
 .candy__pin {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
+  // Covers the section's own decorations while pinned; it has its own set,
+  // which stays put while the photos slide past.
+  background: var(--bg);
   padding-block: var(--space-8) var(--space-6);
 
   @include scroll-driven {

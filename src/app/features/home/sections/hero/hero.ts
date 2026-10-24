@@ -6,6 +6,7 @@ import {
   ElementRef,
   inject,
 } from '@angular/core';
+import { Blossoms } from '../../../../shared/components/blossoms/blossoms';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { MarqueeDirective } from '../../../../shared/directives/marquee.directive';
 import { MotionService } from '../../../../core/services/motion.service';
@@ -23,7 +24,7 @@ const INTRO_MAX_START_MS = 1000;
 @Component({
   selector: 'app-hero-section',
   standalone: true,
-  imports: [Icon, MarqueeDirective],
+  imports: [Blossoms, Icon, MarqueeDirective],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

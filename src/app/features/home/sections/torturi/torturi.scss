@@ -201,54 +201,6 @@ $ribbon-gap: 1.25rem;
   }
 }
 
-// Little decorations around the plate.
-.torturi__sprinkle {
-  position: absolute;
-  display: grid;
-  place-items: center;
-  width: 2.75rem;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--white);
-  box-shadow: var(--shadow-sm);
-  color: var(--accent);
-  font-size: 1.2rem;
-  animation: sprinkle-float 5s var(--ease-in-out) infinite alternate;
-
-  @include reduced-motion {
-    animation: none;
-  }
-
-  &:nth-of-type(1) {
-    top: 6%;
-    left: 6%;
-  }
-
-  &:nth-of-type(2) {
-    top: 14%;
-    right: 4%;
-    color: var(--white);
-    background: var(--accent);
-    animation-delay: -1.7s;
-  }
-
-  &:nth-of-type(3) {
-    top: 40%;
-    right: 0;
-    width: 2.25rem;
-    font-size: 1rem;
-    color: #3d8fc4;
-    animation-delay: -3.1s;
-  }
-}
-
-@keyframes sprinkle-float {
-  to {
-    translate: 0 -12px;
-    rotate: 8deg;
-  }
-}
-
 // ── Ribbon of more cakes ───────────────────────────────────
 .torturi__gallery {
   display: flex;

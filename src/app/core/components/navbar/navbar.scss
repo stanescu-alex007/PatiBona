@@ -13,11 +13,6 @@
   --nav-border: var(--border);
 }
 
-:host(.is-open) {
-  --nav-bg: transparent;
-  --nav-border: transparent;
-}
-
 // ── Bar ────────────────────────────────────────────────────
 .nav {
   position: fixed;
@@ -41,17 +36,43 @@
   height: var(--nav-height);
   margin-top: 0.75rem;
   padding-inline: 0.75rem 0.75rem;
+  position: relative;
+  isolation: isolate;
   border-radius: var(--radius-pill);
-  background: var(--nav-bg);
-  border: 1px solid var(--nav-border);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  transition:
-    background-color var(--dur-base) var(--ease-out),
-    border-color var(--dur-base) var(--ease-out);
 
-  :host(.is-scrolled) & {
-    box-shadow: var(--shadow-sm);
+  // The frosted glass lives on its own layer behind the bar, so it can fade
+  // out under the opening menu without the logo and links being repainted
+  // (switching the blur off on the bar itself made them flicker).
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      opacity 0.25s var(--ease-out);
+
+    :host(.is-scrolled) & {
+      box-shadow: var(--shadow-sm);
+    }
+
+    // Gone at once while the pink circle grows; back only after the closing
+    // circle (0.8s) has shrunk away, never on top of it.
+    :host(.is-open) & {
+      opacity: 0;
+      transition: opacity 0.15s linear;
+    }
+  }
+
+  :host(:not(.is-open)) &::before {
+    transition-delay: 0s, 0s, 0s, 0.8s;
   }
 }
 
@@ -141,6 +162,7 @@
 
 .nav__burger {
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
   border-color: color-mix(in srgb, currentColor 30%, transparent);
   background: color-mix(in srgb, currentColor 6%, transparent);
 }
@@ -200,13 +222,14 @@
     opacity 0.6s var(--ease-out),
     transform 0.6s var(--ease-out);
 
+  // Staggered in on open; on close they all leave at once, ahead of the circle.
   .menu--open & {
     opacity: 1;
     transform: none;
   }
 
   @for $i from 1 through 7 {
-    &:nth-child(#{$i}) {
+    .menu--open &:nth-child(#{$i}) {
       transition-delay: #{0.25 + $i * 0.06}s;
     }
   }
@@ -242,10 +265,11 @@
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
   opacity: 0;
-  transition: opacity 0.6s var(--ease-out) 0.7s;
+  transition: opacity 0.3s var(--ease-out);
 
   .menu--open & {
     opacity: 1;
+    transition: opacity 0.6s var(--ease-out) 0.7s;
   }
 }
 

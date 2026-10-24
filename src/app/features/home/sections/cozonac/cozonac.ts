@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AttributeList } from '../../../../shared/components/attribute-list/attribute-list';
+import { Blossoms } from '../../../../shared/components/blossoms/blossoms';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { ParallaxDirective } from '../../../../shared/directives/parallax.directive';
 import { RevealDirective } from '../../../../shared/directives/reveal.directive';
@@ -11,7 +12,7 @@ import { CATALOG_REPOSITORY } from '../../services/catalog.repository';
 @Component({
   selector: 'app-cozonac-section',
   standalone: true,
-  imports: [AttributeList, Icon, ParallaxDirective, RevealDirective],
+  imports: [Blossoms, AttributeList, Icon, ParallaxDirective, RevealDirective],
   templateUrl: './cozonac.html',
   styleUrl: './cozonac.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,39 @@
+<svg class="ribbons" viewBox="0 0 1440 600" preserveAspectRatio="none" focusable="false">
+  @if (ribbons() === 'both') {
+    <path
+      class="ribbons__line ribbons__line--a"
+      d="M-20 140 C 220 40, 420 260, 720 160 S 1180 40, 1460 170"
+    />
+  }
+  <path
+    class="ribbons__line ribbons__line--b"
+    d="M-20 470 C 260 560, 520 360, 800 450 S 1240 560, 1460 430"
+  />
+</svg>
+
+<div class="blossoms__bows">
+  @for (bow of bows; track bow) {
+    <svg class="bow" viewBox="0 0 24 24" focusable="false">
+      <path class="bow__tail" d="M11 12.5 8.2 20.5l2-.6 1.1 1.9L12.4 13z" />
+      <path class="bow__tail" d="M13 12.5l2.8 8 -2-.6-1.1 1.9L11.6 13z" />
+      <path class="bow__loop" d="M12 12C8.5 6.5 2.5 6.8 3 10.6 3.5 14.6 9 14.2 12 12z" />
+      <path class="bow__loop" d="M12 12c3.5-5.5 9.5-5.2 9 -1.4-.5 4-6 3.6-9 1.4z" />
+      <circle class="bow__knot" cx="12" cy="12" r="1.9" />
+    </svg>
+  }
+</div>
+
+<div class="blossoms__flowers">
+  @for (flower of flowers; track flower) {
+    <svg class="blossom" viewBox="0 0 24 24" focusable="false">
+      <g class="blossom__petals">
+        <ellipse cx="12" cy="6.4" rx="3.5" ry="5" />
+        <ellipse cx="12" cy="6.4" rx="3.5" ry="5" transform="rotate(72 12 12)" />
+        <ellipse cx="12" cy="6.4" rx="3.5" ry="5" transform="rotate(144 12 12)" />
+        <ellipse cx="12" cy="6.4" rx="3.5" ry="5" transform="rotate(216 12 12)" />
+        <ellipse cx="12" cy="6.4" rx="3.5" ry="5" transform="rotate(288 12 12)" />
+      </g>
+      <circle class="blossom__heart" cx="12" cy="12" r="2.6" />
+    </svg>
+  }
+</div>

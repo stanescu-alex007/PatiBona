@@ -6,6 +6,7 @@
 
 .cozonac {
   position: relative;
+  isolation: isolate;
   padding-block: var(--space-7) var(--space-7);
   background: var(--bg);
 

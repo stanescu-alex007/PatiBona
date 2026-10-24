@@ -4,6 +4,8 @@
     <span class="hero__glow hero__glow--white"></span>
   </div>
 
+  <app-blossoms layout="c" tone="light" />
+
   <div class="hero__photos" aria-hidden="true">
     @for (photo of photos; track photo.src) {
       <div class="hero__photo" data-hero="photo" [attr.data-depth]="photo.depth">
@@ -30,7 +32,7 @@
         Descoperă produsele
         <app-icon name="arrow-down" />
       </button>
-      <a class="btn btn--ghost" [href]="'tel:' + business.phone">
+      <a class="btn btn--secondary" [href]="'tel:' + business.phone">
         <app-icon name="phone" />
         {{ business.phoneDisplay }}
       </a>

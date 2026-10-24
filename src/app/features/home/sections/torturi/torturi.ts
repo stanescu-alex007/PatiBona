@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AttributeList } from '../../../../shared/components/attribute-list/attribute-list';
+import { Blossoms } from '../../../../shared/components/blossoms/blossoms';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { MarqueeDirective } from '../../../../shared/directives/marquee.directive';
 import { RevealDirective } from '../../../../shared/directives/reveal.directive';
@@ -15,7 +16,7 @@ import { CATALOG_REPOSITORY } from '../../services/catalog.repository';
 @Component({
   selector: 'app-torturi-section',
   standalone: true,
-  imports: [AttributeList, Icon, MarqueeDirective, RevealDirective, TiltDirective],
+  imports: [Blossoms, AttributeList, Icon, MarqueeDirective, RevealDirective, TiltDirective],
   templateUrl: './torturi.html',
   styleUrl: './torturi.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

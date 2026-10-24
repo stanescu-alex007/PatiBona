@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Blossoms } from '../../../../shared/components/blossoms/blossoms';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { MapEmbed } from '../../../../shared/components/map-embed/map-embed';
 import { RevealDirective } from '../../../../shared/directives/reveal.directive';
@@ -9,7 +10,7 @@ import { STORY } from '../../data/story.data';
 @Component({
   selector: 'app-visit-section',
   standalone: true,
-  imports: [Icon, MapEmbed, RevealDirective],
+  imports: [Blossoms, Icon, MapEmbed, RevealDirective],
   templateUrl: './visit.html',
   styleUrl: './visit.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

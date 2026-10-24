@@ -83,6 +83,18 @@
   }
 }
 
+// Its companion: baby blue, for the second action next to a pink one.
+.btn--secondary {
+  background: var(--secondary);
+  color: var(--on-secondary);
+  box-shadow: 0 10px 30px -12px var(--secondary-glow);
+
+  @include hover {
+    background: var(--secondary-strong);
+    box-shadow: 0 16px 36px -14px var(--secondary-glow);
+  }
+}
+
 .btn--ghost {
   background: transparent;
   color: currentColor;

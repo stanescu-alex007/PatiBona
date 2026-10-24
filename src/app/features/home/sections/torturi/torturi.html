@@ -1,4 +1,5 @@
 <section id="torturi" class="torturi" aria-labelledby="torturi-title">
+  <app-blossoms layout="b" tone="pink" />
   <div class="torturi__grid container">
     <div class="torturi__text" appReveal [revealChildren]="true">
       <p class="eyebrow" data-reveal-child>{{ copy.eyebrow }}</p>
@@ -30,9 +31,6 @@
 
       <div class="torturi__shelf" aria-hidden="true"></div>
 
-      <span class="torturi__sprinkle" aria-hidden="true"><app-icon name="sparkles" /></span>
-      <span class="torturi__sprinkle" aria-hidden="true"><app-icon name="heart" /></span>
-      <span class="torturi__sprinkle" aria-hidden="true"><app-icon name="star" /></span>
     </div>
   </div>
 

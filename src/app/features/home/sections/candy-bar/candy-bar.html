@@ -1,5 +1,8 @@
 <section id="candy-bar" class="candy" aria-labelledby="candy-title">
+  <app-blossoms layout="c" tone="light" />
+
   <div class="candy__pin" #pin>
+    <app-blossoms layout="b" tone="light" />
     <div class="candy__track" #track>
       <div class="candy__panel candy__panel--intro" appReveal [revealChildren]="true">
         <h2 id="candy-title" class="display-2xl" data-reveal-child>{{ copy.title }}</h2>
