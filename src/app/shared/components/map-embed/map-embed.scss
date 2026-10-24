@@ -5,7 +5,12 @@
   background: var(--surface-2);
 }
 
+// Pinned to all four edges rather than sized with height: 100%. The host gets
+// its height from aspect-ratio, which some mobile browsers (older Safari) do
+// not treat as a definite height, leaving the iframe at its default 150px.
 .map__frame {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   border: 0;
